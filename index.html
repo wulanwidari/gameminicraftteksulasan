@@ -1,0 +1,2753 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Minicraft Edukasi: Petualangan Teks Ulasan (SMP Kelas 8)</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Press Start 2P untuk nuansa Minecraft & Inter untuk keterbacaan soal -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --mc-green: #5b8731;
+      --mc-green-dark: #3b5b1e;
+      --mc-dirt: #79553a;
+      --mc-stone: #7d7d7d;
+      --mc-gold: #facc15;
+      --mc-diamond: #38bdf8;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #141812;
+      color: #f3f4f6;
+      overflow-x: hidden;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .font-pixel {
+      font-family: 'Press Start 2P', monospace;
+      letter-spacing: 0.03em;
+    }
+
+    /* Gaya Tombol Khas Minecraft */
+    .mc-btn {
+      position: relative;
+      background: #6b7280;
+      border: 3px solid #1f2937;
+      box-shadow: inset 3px 3px 0px rgba(255, 255, 255, 0.35), inset -3px -3px 0px rgba(0, 0, 0, 0.45);
+      transition: transform 0.08s ease, filter 0.12s ease;
+    }
+    .mc-btn:hover:not(:disabled) {
+      filter: brightness(1.1);
+    }
+    .mc-btn:active:not(:disabled) {
+      transform: translateY(2px);
+      box-shadow: inset 2px 2px 0px rgba(0, 0, 0, 0.45);
+    }
+    .mc-btn-green {
+      background: #5b8731;
+      border-color: #1e2e10;
+    }
+    .mc-btn-gold {
+      background: #d97706;
+      border-color: #451a03;
+    }
+    .mc-btn-blue {
+      background: #0284c7;
+      border-color: #082f49;
+    }
+    .mc-btn-red {
+      background: #dc2626;
+      border-color: #450a0a;
+    }
+
+    /* Panel Bergaya Blok Minecraft */
+    .mc-panel {
+      background: #232722;
+      border: 4px solid #111310;
+      box-shadow: inset 3px 3px 0px rgba(255, 255, 255, 0.12), inset -3px -3px 0px rgba(0, 0, 0, 0.55);
+    }
+
+    /* Slot Hotbar */
+    .hotbar-slot {
+      background: rgba(31, 35, 30, 0.9);
+      border: 3px solid #4b5563;
+      box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.7);
+      transition: all 0.1s ease;
+    }
+    .hotbar-slot.active {
+      border-color: #facc15;
+      background: rgba(65, 72, 58, 0.95);
+      transform: scale(1.06);
+      box-shadow: 0 0 12px rgba(250, 204, 21, 0.45);
+    }
+
+    /* Canvas Responsif */
+    #gameCanvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      image-rendering: pixelated;
+      touch-action: none;
+    }
+
+    /* Custom Scrollbar untuk Modal Soal */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #1a1d19;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #4b5563;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #6b7280;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 10px rgba(250, 204, 21, 0.4); }
+      50% { box-shadow: 0 0 22px rgba(250, 204, 21, 0.85); }
+    }
+    .glow-gold {
+      animation: pulseGlow 2s infinite;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- ==================== 1. LAYAR AWAL (REGISTRASI SISWA & PILIH MODE) ==================== -->
+  <div id="startScreen" class="min-h-screen flex items-center justify-center p-4 bg-gradient-to-b from-[#1e3522] via-[#172318] to-[#0f130f]">
+    <div class="mc-panel rounded-2xl max-w-4xl w-full p-5 sm:p-8 shadow-2xl">
+      <!-- Header Judul -->
+      <div class="text-center mb-6">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 text-xs font-semibold mb-3">
+          <span>⛏️ BAHASA INDONESIA SMP KELAS 8</span>
+          <span>•</span>
+          <span>⏱️ WAKTU 40 MENIT</span>
+        </div>
+        <h1 class="font-pixel text-lg sm:text-2xl md:text-3xl text-amber-400 leading-relaxed drop-shadow-[0_3px_0_rgba(0,0,0,0.9)]">
+          MINICRAFT: TEKS ULASAN
+        </h1>
+        <p class="text-gray-300 text-sm sm:text-base mt-2 max-w-2xl mx-auto">
+          Jelajahi dunia blok, patuhi aturan Minecraft, kumpulkan sumber daya, dan jawab <strong class="text-emerald-400">BENAR semua 25 Peti Soal</strong> tentang Teks Ulasan Buku & Film untuk meraih nilai terbaik!
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Form Identitas Siswa -->
+        <div class="lg:col-span-6 bg-black/35 p-5 rounded-xl border border-white/10 flex flex-col justify-between">
+          <div>
+            <h2 class="text-base sm:text-lg font-bold text-white mb-4 flex items-center gap-2">
+              <span class="text-xl">🪪</span> Data Identitas Siswa
+            </h2>
+
+            <div class="space-y-4">
+              <div>
+                <label for="studentNameInput" class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1.5">
+                  Nama Lengkap Siswa <span class="text-red-400">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="studentNameInput"
+                  placeholder="Contoh: Ahmad Rizky Pratama"
+                  class="w-full px-4 py-3 rounded-xl bg-gray-900 border-2 border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 text-sm sm:text-base font-medium"
+                />
+                <p id="nameErrorMsg" class="hidden text-xs text-red-400 mt-1.5 font-medium">
+                  ⚠️ Mohon isi Nama Lengkap terlebih dahulu sebelum masuk ke dunia!
+                </p>
+              </div>
+
+              <div>
+                <label for="studentClassInput" class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1.5">
+                  Kelas & Nomor Absen <span class="text-red-400">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="studentClassInput"
+                  placeholder="Contoh: 8B / Absen 14"
+                  class="w-full px-4 py-3 rounded-xl bg-gray-900 border-2 border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 text-sm sm:text-base font-medium"
+                />
+                <p id="classErrorMsg" class="hidden text-xs text-red-400 mt-1.5 font-medium">
+                  ⚠️ Mohon isi Kelas / Nomor Absen agar nilai mudah direkap guru!
+                </p>
+              </div>
+
+              <!-- Pilihan Mode Permainan (Core Mechanics) -->
+              <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-2">
+                  Pilih Mode Permainan (Game Mode)
+                </label>
+                <div class="grid grid-cols-3 gap-2">
+                  <button type="button" onclick="selectStartMode('Survival')" id="modeBtn-Survival" class="mode-select-btn p-2.5 rounded-xl border-2 border-emerald-500 bg-emerald-950/70 text-center transition">
+                    <div class="text-lg">⚔️</div>
+                    <div class="text-xs font-bold text-emerald-300">Survival</div>
+                    <div class="text-[10px] text-gray-400 leading-tight mt-0.5">Kumpul item & lawan mob</div>
+                  </button>
+                  <button type="button" onclick="selectStartMode('Adventure')" id="modeBtn-Adventure" class="mode-select-btn p-2.5 rounded-xl border-2 border-gray-700 bg-gray-900/70 text-center transition hover:border-gray-500">
+                    <div class="text-lg">🧭</div>
+                    <div class="text-xs font-bold text-amber-300">Adventure</div>
+                    <div class="text-[10px] text-gray-400 leading-tight mt-0.5">Jelajah & jaga blok desa</div>
+                  </button>
+                  <button type="button" onclick="selectStartMode('Creative')" id="modeBtn-Creative" class="mode-select-btn p-2.5 rounded-xl border-2 border-gray-700 bg-gray-900/70 text-center transition hover:border-gray-500">
+                    <div class="text-lg">✨</div>
+                    <div class="text-xs font-bold text-sky-300">Creative</div>
+                    <div class="text-[10px] text-gray-400 leading-tight mt-0.5">Bebas & aman dari mob</div>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onclick="startGame()"
+            class="mc-btn mc-btn-green w-full mt-6 py-4 px-6 rounded-xl text-white font-pixel text-xs sm:text-sm tracking-wide flex items-center justify-center gap-3 cursor-pointer"
+          >
+            <span>▶ MULAI MISI (40 MENIT)</span>
+          </button>
+        </div>
+
+        <!-- Ringkasan Aturan Minecraft & Misi Belajar -->
+        <div class="lg:col-span-6 bg-black/35 p-5 rounded-xl border border-white/10 space-y-3.5 text-xs sm:text-sm">
+          <h2 class="text-base sm:text-lg font-bold text-amber-300 flex items-center gap-2">
+            <span class="text-xl">📜</span> Panduan Dunia & Aturan Main
+          </h2>
+
+          <div class="p-3 rounded-xl bg-emerald-950/40 border border-emerald-700/40">
+            <div class="font-bold text-emerald-300 mb-1">🎯 Misi Utama Ujian (25 Soal Wajib Benar)</div>
+            <p class="text-gray-300 text-xs leading-relaxed">
+              Temukan dan buka <strong>25 Peti Ulasan</strong> di seluruh peta. Setiap soal harus dijawab <strong>BENAR</strong> untuk membuka kunci peti berikutnya. Jawaban benar pada percobaan pertama mendapat poin penuh!
+            </p>
+          </div>
+
+          <div class="p-3 rounded-xl bg-sky-950/40 border border-sky-700/40">
+            <div class="font-bold text-sky-300 mb-1">⚙️ Aturan Sistem Resmi (/gamerule)</div>
+            <ul class="text-gray-300 text-xs space-y-1 list-disc list-inside">
+              <li><code class="text-amber-300">KeepInventory</code>: Item tetap aman saat kehabisan nyawa.</li>
+              <li><code class="text-amber-300">MobSpawning</code> & <code class="text-amber-300">DaylightCycle</code>: Monster muncul saat malam tiba.</li>
+              <li><code class="text-amber-300">DoFireTick</code>: Hati-hati dekat kolam lava di area tambang!</li>
+            </ul>
+          </div>
+
+          <div class="p-3 rounded-xl bg-amber-950/40 border border-amber-700/40">
+            <div class="font-bold text-amber-300 mb-1">🤝 Aturan Tidak Tertulis Komunitas</div>
+            <ul class="text-gray-300 text-xs space-y-1 list-disc list-inside">
+              <li><strong>Never Dig Straight Down:</strong> Jangan menggali lurus ke bawah di lantai retak!</li>
+              <li><strong>Siapkan Penerangan (Torch):</strong> Pasang obor di area gelap agar monster menjauh.</li>
+              <li><strong>Jaga Properti Desa:</strong> Jangan merusak bangunan Desa Pustaka & Bioskop.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 2. LAYAR PERMAINAN UTAMA ==================== -->
+  <div id="gameScreen" class="hidden flex-col h-screen w-screen overflow-hidden">
+    <!-- Top HUD Bar -->
+    <header class="bg-[#1b1f1a] border-b-4 border-[#0e100d] px-3 py-2 flex flex-wrap items-center justify-between gap-2 z-20 shrink-0">
+      <!-- Identitas & Mode -->
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-lg bg-emerald-700 border-2 border-emerald-400 flex items-center justify-center font-bold text-white text-sm shadow">
+          🧑‍🎓
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span id="hudStudentName" class="font-bold text-white text-xs sm:text-sm truncate max-w-[140px] sm:max-w-[220px]">Siswa</span>
+            <span id="hudModeBadge" class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-900 text-emerald-300 border border-emerald-600">Survival</span>
+          </div>
+          <div id="hudStudentClass" class="text-[11px] text-gray-400">Kelas 8</div>
+        </div>
+      </div>
+
+      <!-- Timer 40 Menit & Siklus Waktu Minecraft -->
+      <div class="flex items-center gap-2 sm:gap-3 bg-black/50 px-3 py-1.5 rounded-xl border border-white/10">
+        <div class="text-center">
+          <div class="text-[10px] text-gray-400 uppercase font-semibold">Sisa Waktu</div>
+          <div id="hudTimer" class="font-pixel text-xs sm:text-sm text-amber-400">40:00</div>
+        </div>
+        <div class="h-6 w-[1px] bg-gray-700"></div>
+        <div class="text-center">
+          <div class="text-[10px] text-gray-400 uppercase font-semibold">Siklus Dunia</div>
+          <div id="hudDayPhase" class="text-xs font-bold text-sky-300">☀️ Siang</div>
+        </div>
+      </div>
+
+      <!-- Progress 25 Soal & Nilai Sementara -->
+      <div class="flex items-center gap-2 sm:gap-4">
+        <div class="bg-black/50 px-3 py-1.5 rounded-xl border border-emerald-500/30">
+          <div class="flex items-center justify-between gap-3 text-[11px] mb-1">
+            <span class="text-gray-300 font-semibold">Peti Benar:</span>
+            <span id="hudSolvedCount" class="font-bold text-emerald-400">0 / 25</span>
+          </div>
+          <div class="w-24 sm:w-32 h-2 bg-gray-800 rounded-full overflow-hidden">
+            <div id="hudProgressBar" class="h-full bg-emerald-500 transition-all duration-300" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <div class="bg-black/50 px-3 py-1.5 rounded-xl border border-amber-500/30 text-center">
+          <div class="text-[10px] text-gray-400 uppercase font-semibold">Skor</div>
+          <div id="hudScore" class="font-bold text-sm sm:text-base text-amber-300">0</div>
+        </div>
+      </div>
+
+      <!-- Tombol Menu Bantuan & Gamerules -->
+      <div class="flex items-center gap-1.5">
+        <button onclick="openQuestionListModal()" class="mc-btn mc-btn-gold px-2.5 py-2 rounded-lg text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer" title="Daftar 25 Soal & Kompas">
+          <span>🗺️</span>
+          <span class="hidden md:inline">25 Soal</span>
+        </button>
+        <button onclick="openRulesModal()" class="mc-btn mc-btn-blue px-2.5 py-2 rounded-lg text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer" title="Aturan Minecraft & /gamerule">
+          <span>⚙️</span>
+          <span class="hidden md:inline">Aturan & Gamerule</span>
+        </button>
+        <button onclick="toggleSound()" id="soundToggleBtn" class="mc-btn px-2.5 py-2 rounded-lg text-white text-xs font-bold cursor-pointer" title="Suara Efek">
+          🔊
+        </button>
+      </div>
+    </header>
+
+    <!-- Area Tengah: Canvas Dunia Minicraft + Overlay HUD -->
+    <main class="relative flex-1 w-full overflow-hidden bg-[#0e130e]">
+      <canvas id="gameCanvas"></canvas>
+
+      <!-- Info Lokasi Bioma & Kompas Peti Terdekat (Kiri Atas Canvas) -->
+      <div class="absolute top-3 left-3 flex flex-col gap-2 pointer-events-none max-w-[260px] sm:max-w-xs">
+        <div class="bg-black/70 backdrop-blur-sm border border-white/15 px-3 py-2 rounded-xl text-xs">
+          <div class="flex items-center gap-1.5 font-bold text-emerald-300">
+            <span>📍</span>
+            <span id="biomeLabel">Desa Pustaka & Spawn</span>
+          </div>
+          <div id="nearestChestLabel" class="text-[11px] text-amber-300 mt-1">
+            🧭 Peti Terdekat: #1 (5 blok ke Timur)
+          </div>
+        </div>
+
+        <!-- Kotak Chat / Feedback Command Block & Gamerule -->
+        <div id="chatLogBox" class="bg-black/65 border border-white/10 px-3 py-2 rounded-xl text-[11px] space-y-1 max-h-28 overflow-hidden">
+          <div class="text-amber-300 font-mono">[Server] Selamat datang di dunia Minicraft Teks Ulasan!</div>
+        </div>
+      </div>
+
+      <!-- Mini-map & Tombol Cepat Buka Soal Terdekat (Kanan Atas Canvas) -->
+      <div class="absolute top-3 right-3 flex flex-col items-end gap-2">
+        <div class="bg-black/75 p-1.5 rounded-xl border-2 border-gray-600 shadow-lg">
+          <canvas id="minimapCanvas" width="110" height="110" class="rounded-lg block"></canvas>
+          <div class="text-[9px] text-center text-gray-300 mt-1 font-semibold">Peta Dunia (48×48)</div>
+        </div>
+
+        <button
+          id="openNearestChestBtn"
+          onclick="interactNearestChest()"
+          class="mc-btn mc-btn-green px-3 py-2 rounded-xl text-white text-xs font-bold shadow-lg flex items-center gap-1.5 cursor-pointer glow-gold"
+        >
+          <span>📦</span>
+          <span>Buka Peti Soal Terdekat</span>
+        </button>
+      </div>
+
+      <!-- Kontrol Sentuh (Mobile / Tablet D-Pad & Action Buttons) -->
+      <div class="md:hidden absolute bottom-3 left-3 right-3 flex items-end justify-between pointer-events-none z-10">
+        <!-- D-Pad -->
+        <div class="grid grid-cols-3 gap-1.5 w-36 h-36 pointer-events-auto opacity-85">
+          <div></div>
+          <button ontouchstart="setTouchDir(0,-1)" ontouchend="clearTouchDir()" ontouchcancel="clearTouchDir()" onmousedown="setTouchDir(0,-1)" onmouseup="clearTouchDir()" onmouseleave="clearTouchDir()" class="mc-btn rounded-xl flex items-center justify-center text-white font-bold text-lg active:bg-emerald-600">▲</button>
+          <div></div>
+          <button ontouchstart="setTouchDir(-1,0)" ontouchend="clearTouchDir()" ontouchcancel="clearTouchDir()" onmousedown="setTouchDir(-1,0)" onmouseup="clearTouchDir()" onmouseleave="clearTouchDir()" class="mc-btn rounded-xl flex items-center justify-center text-white font-bold text-lg active:bg-emerald-600">◀</button>
+          <div class="bg-black/40 rounded-xl border border-white/10 flex items-center justify-center text-[10px] text-gray-400">GERAK</div>
+          <button ontouchstart="setTouchDir(1,0)" ontouchend="clearTouchDir()" ontouchcancel="clearTouchDir()" onmousedown="setTouchDir(1,0)" onmouseup="clearTouchDir()" onmouseleave="clearTouchDir()" class="mc-btn rounded-xl flex items-center justify-center text-white font-bold text-lg active:bg-emerald-600">▶</button>
+          <div></div>
+          <button ontouchstart="setTouchDir(0,1)" ontouchend="clearTouchDir()" ontouchcancel="clearTouchDir()" onmousedown="setTouchDir(0,1)" onmouseup="clearTouchDir()" onmouseleave="clearTouchDir()" class="mc-btn rounded-xl flex items-center justify-center text-white font-bold text-lg active:bg-emerald-600">▼</button>
+          <div></div>
+        </div>
+
+        <!-- Tombol Aksi Mobile -->
+        <div class="flex flex-col gap-2 pointer-events-auto">
+          <button onclick="performPrimaryAction()" class="mc-btn mc-btn-gold px-4 py-3.5 rounded-2xl text-white font-bold text-xs shadow-lg">
+            ⛏️ AKSI / BUKA
+          </button>
+          <button onclick="placeTorchAction()" class="mc-btn mc-btn-blue px-4 py-3 rounded-2xl text-white font-bold text-xs shadow-lg">
+            🔦 PASANG OBOR
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Bottom Status & Hotbar Minecraft -->
+    <footer class="bg-[#1b1f1a] border-t-4 border-[#0e100d] px-3 py-2 shrink-0 z-20">
+      <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+        <!-- Health & Hunger Bars -->
+        <div class="flex items-center gap-4 text-xs">
+          <div class="flex items-center gap-1" title="Darah (Health)">
+            <span class="text-gray-400 font-semibold mr-1">Darah:</span>
+            <span id="healthHearts" class="tracking-tighter text-sm">❤️❤️❤️❤️❤️</span>
+          </div>
+          <div class="flex items-center gap-1" title="Lapar (Hunger)">
+            <span class="text-gray-400 font-semibold mr-1">Lapar:</span>
+            <span id="hungerIcons" class="tracking-tighter text-sm">🍗🍗🍗🍗🍗</span>
+          </div>
+        </div>
+
+        <!-- 4 Slot Hotbar -->
+        <div class="flex items-center gap-2">
+          <button onclick="selectHotbar(0)" id="slot-0" class="hotbar-slot active px-3 py-1.5 rounded-xl flex items-center gap-2 cursor-pointer">
+            <span class="text-lg">⛏️</span>
+            <div class="text-left">
+              <div class="text-[11px] font-bold text-white">[1] Beliung</div>
+              <div class="text-[10px] text-gray-400">Gali / Serang</div>
+            </div>
+          </button>
+
+          <button onclick="selectHotbar(1)" id="slot-1" class="hotbar-slot px-3 py-1.5 rounded-xl flex items-center gap-2 cursor-pointer">
+            <span class="text-lg">🔦</span>
+            <div class="text-left">
+              <div class="text-[11px] font-bold text-amber-300">[2] Obor (<span id="invTorch">6</span>)</div>
+              <div class="text-[10px] text-gray-400">Terangi Gelap</div>
+            </div>
+          </button>
+
+          <button onclick="selectHotbar(2)" id="slot-2" class="hotbar-slot px-3 py-1.5 rounded-xl flex items-center gap-2 cursor-pointer">
+            <span class="text-lg">🍎</span>
+            <div class="text-left">
+              <div class="text-[11px] font-bold text-rose-300">[3] Apel (<span id="invApple">4</span>)</div>
+              <div class="text-[10px] text-gray-400">Isi Lapar</div>
+            </div>
+          </button>
+
+          <button onclick="craftTorch()" class="mc-btn mc-btn-green px-3 py-2 rounded-xl text-white text-[11px] font-bold cursor-pointer" title="Buat 4 Obor dari Kayu & Batu">
+            🔨 Craft Obor<br><span class="text-[9px] text-emerald-200 font-normal">Kayu: <span id="invWood">4</span> | Batu: <span id="invStone">2</span></span>
+          </button>
+        </div>
+
+        <!-- Kontrol Keyboard Hint -->
+        <div class="hidden lg:block text-[11px] text-gray-400 text-right">
+          <div><kbd class="px-1.5 py-0.5 bg-gray-800 rounded border border-gray-600 text-gray-200">WASD / Panah</kbd> Gerak • <kbd class="px-1.5 py-0.5 bg-gray-800 rounded border border-gray-600 text-gray-200">Spasi / E</kbd> Buka Peti / Aksi</div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ==================== 3. MODAL SOAL TEKS ULASAN (PETI #1 - #25) ==================== -->
+  <div id="questionModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
+    <div class="mc-panel rounded-2xl max-w-2xl w-full p-5 sm:p-7 my-auto shadow-2xl border-amber-500/60">
+      <!-- Header Soal -->
+      <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-gray-700">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">📦</span>
+          <div>
+            <span id="qChestBadge" class="font-pixel text-xs text-amber-400">PETI ULASAN #1 / 25</span>
+            <div id="qTopicBadge" class="text-xs text-emerald-300 font-semibold mt-0.5">Materi: Pengertian Teks Ulasan</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <span id="qAttemptBadge" class="px-2.5 py-1 rounded-lg bg-gray-800 text-xs text-gray-300 font-medium border border-gray-600">
+            Percobaan ke-1 (Maks 4 Poin)
+          </span>
+          <button onclick="closeQuestionModal()" class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs font-bold cursor-pointer">
+            ✕ Tutup
+          </button>
+        </div>
+      </div>
+
+      <!-- Kutipan Teks (Jika Ada) -->
+      <div id="qPassageBox" class="hidden mt-4 p-4 rounded-xl bg-gray-900/90 border-l-4 border-sky-400 text-gray-200 text-xs sm:text-sm leading-relaxed italic">
+      </div>
+
+      <!-- Pertanyaan -->
+      <div class="mt-4">
+        <p id="qText" class="text-white font-semibold text-sm sm:text-base leading-relaxed">
+          Pertanyaan akan muncul di sini...
+        </p>
+      </div>
+
+      <!-- Pilihan Jawaban A, B, C, D -->
+      <div id="qOptionsContainer" class="mt-4 space-y-2.5">
+      </div>
+
+      <!-- Kotak Umpan Balik / Pembahasan -->
+      <div id="qFeedbackBox" class="hidden mt-4 p-4 rounded-xl text-xs sm:text-sm leading-relaxed">
+      </div>
+
+      <!-- Tombol Lanjut setelah Benar -->
+      <div id="qNextActionBox" class="hidden mt-4 flex justify-end">
+        <button onclick="closeQuestionModalAndContinue()" class="mc-btn mc-btn-green px-5 py-3 rounded-xl text-white font-bold text-xs sm:text-sm cursor-pointer">
+          ✅ Ambil Hadiah & Lanjut Jelajah!
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 4. MODAL ATURAN MINECRAFT & /GAMERULE ==================== -->
+  <div id="rulesModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
+    <div class="mc-panel rounded-2xl max-w-3xl w-full p-5 sm:p-7 my-auto max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between pb-3 border-b border-gray-700">
+        <h2 class="font-pixel text-sm sm:text-base text-amber-400">⚙️ ATURAN MINECRAFT & /GAMERULE</h2>
+        <button onclick="closeRulesModal()" class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-white text-xs font-bold cursor-pointer">✕ Tutup</button>
+      </div>
+
+      <div class="mt-4 space-y-5 text-xs sm:text-sm text-gray-200">
+        <!-- Kategori 1: Game Rules -->
+        <div class="bg-black/40 p-4 rounded-xl border border-sky-500/30">
+          <h3 class="font-bold text-sky-300 text-sm sm:text-base mb-1">1. Aturan Sistem Resmi (Game Rules)</h3>
+          <p class="text-xs text-gray-400 mb-3">Pengaturan bawaan dunia Minecraft yang bisa diatur melalui menu atau perintah <code class="text-amber-300">/gamerule</code>. Coba ubah sakelar di bawah ini untuk melihat efeknya langsung di game:</p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="p-3 rounded-xl bg-gray-900/90 border border-gray-700 flex items-center justify-between gap-2">
+              <div>
+                <div class="font-bold text-amber-300 font-mono text-xs">KeepInventory</div>
+                <div class="text-[11px] text-gray-400">Item tetap aman di tas setelah kalah.</div>
+              </div>
+              <button onclick="toggleGameRule('KeepInventory')" id="grBtn-KeepInventory" class="px-3 py-1.5 rounded-lg font-bold text-xs bg-emerald-600 text-white cursor-pointer">TRUE</button>
+            </div>
+
+            <div class="p-3 rounded-xl bg-gray-900/90 border border-gray-700 flex items-center justify-between gap-2">
+              <div>
+                <div class="font-bold text-amber-300 font-mono text-xs">MobSpawning</div>
+                <div class="text-[11px] text-gray-400">Kemunculan monster alami saat gelap.</div>
+              </div>
+              <button onclick="toggleGameRule('MobSpawning')" id="grBtn-MobSpawning" class="px-3 py-1.5 rounded-lg font-bold text-xs bg-emerald-600 text-white cursor-pointer">TRUE</button>
+            </div>
+
+            <div class="p-3 rounded-xl bg-gray-900/90 border border-gray-700 flex items-center justify-between gap-2">
+              <div>
+                <div class="font-bold text-amber-300 font-mono text-xs">DoFireTick</div>
+                <div class="text-[11px] text-gray-400">Api/lava dapat menyebar & membakar.</div>
+              </div>
+              <button onclick="toggleGameRule('DoFireTick')" id="grBtn-DoFireTick" class="px-3 py-1.5 rounded-lg font-bold text-xs bg-emerald-600 text-white cursor-pointer">TRUE</button>
+            </div>
+
+            <div class="p-3 rounded-xl bg-gray-900/90 border border-gray-700 flex items-center justify-between gap-2">
+              <div>
+                <div class="font-bold text-amber-300 font-mono text-xs">DaylightCycle</div>
+                <div class="text-[11px] text-gray-400">Siklus siang dan malam berjalan.</div>
+              </div>
+              <button onclick="toggleGameRule('DaylightCycle')" id="grBtn-DaylightCycle" class="px-3 py-1.5 rounded-lg font-bold text-xs bg-emerald-600 text-white cursor-pointer">TRUE</button>
+            </div>
+
+            <div class="p-3 rounded-xl bg-gray-900/90 border border-gray-700 flex items-center justify-between gap-2 sm:col-span-2">
+              <div>
+                <div class="font-bold text-amber-300 font-mono text-xs">CommandBlockOutput / SendCommandFeedback</div>
+                <div class="text-[11px] text-gray-400">Menampilkan pesan perintah admin/sistem di kolom chat game.</div>
+              </div>
+              <button onclick="toggleGameRule('CommandBlockOutput')" id="grBtn-CommandBlockOutput" class="px-3 py-1.5 rounded-lg font-bold text-xs bg-emerald-600 text-white cursor-pointer">TRUE</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kategori 2: Core Mechanics -->
+        <div class="bg-black/40 p-4 rounded-xl border border-emerald-500/30">
+          <h3 class="font-bold text-emerald-300 text-sm sm:text-base mb-2">2. Aturan Dasar Bermain (Core Mechanics)</h3>
+          <ul class="space-y-1.5 text-xs text-gray-300 list-disc list-inside">
+            <li><strong>Siklus Waktu:</strong> Di Minecraft asli, 1 hari = 20 menit nyata (10 menit siang, 7 menit malam, sisanya fajar/senja). Di game pembelajaran ini, siklus dipercepat agar kamu merasakan suasana Siang, Senja, Malam, dan Fajar selama 40 menit ujian!</li>
+            <li><strong>Mode Permainan:</strong> <em>Survival</em> (kumpulkan kayu/apel, jaga Darah & Lapar, lawan monster), <em>Creative</em> (bebas menjelajah tanpa monster), dan <em>Adventure</em> (jelajah peta buatan tanpa merusak blok bangunan).</li>
+          </ul>
+        </div>
+
+        <!-- Kategori 3: Unwritten Rules -->
+        <div class="bg-black/40 p-4 rounded-xl border border-amber-500/30">
+          <h3 class="font-bold text-amber-300 text-sm sm:text-base mb-2">3. Aturan Tidak Tertulis di Komunitas (Unwritten Rules)</h3>
+          <ul class="space-y-1.5 text-xs text-gray-300 list-disc list-inside">
+            <li><strong>Jangan Menggali Langsung ke Bawah (Never Dig Straight Down):</strong> Hindari menggali lurus pada lantai tambang yang retak karena di bawahnya terdapat lava panas!</li>
+            <li><strong>Siapkan Penerangan (Torch):</strong> Pasang obor di area gelap untuk menerangi jalan dan mencegah monster muncul di dekatmu.</li>
+            <li><strong>Hormati Properti Orang Lain:</strong> Jangan merusak bangunan Desa Pustaka atau Teater Bioskop saat menjelajah.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 5. MODAL DAFTAR 25 PETI SOAL ==================== -->
+  <div id="questionListModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
+    <div class="mc-panel rounded-2xl max-w-2xl w-full p-5 sm:p-6 my-auto max-h-[88vh] overflow-y-auto">
+      <div class="flex items-center justify-between pb-3 border-b border-gray-700">
+        <div>
+          <h2 class="font-pixel text-xs sm:text-sm text-amber-400">🗺️ RADAR 25 PETI TEKS ULASAN</h2>
+          <p class="text-xs text-gray-400 mt-1">Klik nomor soal yang belum selesai untuk mengarahkan kompas ke peti tersebut.</p>
+        </div>
+        <button onclick="closeQuestionListModal()" class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-white text-xs font-bold cursor-pointer">✕ Tutup</button>
+      </div>
+
+      <div id="chestGridContainer" class="grid grid-cols-5 gap-2.5 mt-4">
+      </div>
+
+      <div class="mt-4 pt-3 border-t border-gray-700 flex flex-wrap items-center justify-between gap-2 text-xs text-gray-300">
+        <div class="flex items-center gap-3">
+          <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-emerald-600 inline-block"></span> Sudah Benar</span>
+          <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-amber-600 inline-block"></span> Target Kompas</span>
+          <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-gray-700 inline-block"></span> Belum Dibuka</span>
+        </div>
+        <div id="radarSummaryText" class="font-bold text-emerald-400">0 / 25 Selesai</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 6. LAYAR SELESAI & LAPORAN NILAI UNTUK GRUP ==================== -->
+  <div id="resultScreen" class="hidden fixed inset-0 z-50 bg-[#0d120d]/95 overflow-y-auto p-4 flex items-center justify-center">
+    <div class="mc-panel rounded-2xl max-w-2xl w-full p-6 sm:p-8 my-auto shadow-2xl border-emerald-500">
+      <div class="text-center">
+        <div class="inline-block px-3 py-1 rounded-full bg-emerald-950 border border-emerald-500/50 text-emerald-300 text-xs font-bold mb-2">
+          🏆 MISI PETUALANGAN SELESAI!
+        </div>
+        <h2 class="font-pixel text-base sm:text-xl text-amber-400 leading-relaxed">
+          HASIL EVALUASI TEKS ULASAN
+        </h2>
+        <p id="resultSubtitle" class="text-xs sm:text-sm text-gray-300 mt-1">
+          Selamat! Kamu telah menaklukkan tantangan Minicraft Bahasa Indonesia Kelas 8.
+        </p>
+      </div>
+
+      <!-- Kartu Rapor Siswa -->
+      <div class="mt-5 bg-gray-900/90 border-2 border-gray-700 rounded-2xl p-5 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-gray-800">
+          <div>
+            <div class="text-[11px] text-gray-400 uppercase">Nama Lengkap Siswa</div>
+            <div id="resStudentName" class="text-base sm:text-lg font-bold text-white">-</div>
+          </div>
+          <div class="sm:text-right">
+            <div class="text-[11px] text-gray-400 uppercase">Kelas / Absen</div>
+            <div id="resStudentClass" class="text-sm font-bold text-emerald-300">-</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3 text-center">
+          <div class="p-3 rounded-xl bg-black/50 border border-emerald-500/30">
+            <div class="text-[11px] text-gray-400">Soal Benar</div>
+            <div id="resCorrectCount" class="text-lg sm:text-2xl font-extrabold text-emerald-400 mt-0.5">25/25</div>
+          </div>
+          <div class="p-3 rounded-xl bg-black/50 border border-amber-500/40">
+            <div class="text-[11px] text-gray-400">Nilai Akhir</div>
+            <div id="resFinalScore" class="text-2xl sm:text-3xl font-extrabold text-amber-400 mt-0.5">100</div>
+          </div>
+          <div class="p-3 rounded-xl bg-black/50 border border-sky-500/30">
+            <div class="text-[11px] text-gray-400">Waktu Kerja</div>
+            <div id="resTimeTaken" class="text-sm sm:text-base font-bold text-sky-300 mt-1.5">12m 30d</div>
+          </div>
+        </div>
+
+        <!-- Statistik Aktivitas Minicraft -->
+        <div class="text-xs text-gray-300 bg-black/40 p-3 rounded-xl flex flex-wrap justify-between gap-2">
+          <span>🎮 Mode: <strong id="resGameMode" class="text-white">Survival</strong></span>
+          <span>🔦 Obor Dipasang: <strong id="resTorchesPlaced" class="text-amber-300">0</strong></span>
+          <span>⚔️ Monster Dikalahkan: <strong id="resMobsDefeated" class="text-rose-300">0</strong></span>
+        </div>
+
+        <!-- Preview Teks Laporan Siap Setor ke Grup -->
+        <div>
+          <label class="block text-xs font-bold text-gray-300 mb-1.5">
+            📄 Format Laporan untuk Disetor ke Grup Kelas (WA / Telegram):
+          </label>
+          <textarea
+            id="shareReportText"
+            readonly
+            rows="7"
+            class="w-full p-3 rounded-xl bg-black/70 border border-gray-700 text-gray-200 text-xs font-mono leading-relaxed focus:outline-none"
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- Tombol Salin Laporan & Main Lagi -->
+      <div class="mt-5 flex flex-col sm:flex-row gap-3">
+        <button
+          onclick="copyReportToClipboard()"
+          class="mc-btn mc-btn-green flex-1 py-3.5 px-5 rounded-xl text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer"
+        >
+          <span>📋 SALIN LAPORAN NILAI KE GRUP</span>
+        </button>
+        <button
+          onclick="location.reload()"
+          class="mc-btn py-3.5 px-5 rounded-xl text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer"
+        >
+          <span>🔄 Ulangi Permainan</span>
+        </button>
+      </div>
+
+      <!-- Notifikasi Toast Salin Berhasil -->
+      <div id="copyToast" class="hidden mt-3 p-2.5 rounded-xl bg-emerald-900/90 border border-emerald-400 text-emerald-200 text-xs text-center font-semibold">
+        ✅ Laporan nilai berhasil disalin! Silakan tempel (Paste) di grup WhatsApp/Telegram kelasmu.
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Peringatan Umum di Layar Game -->
+  <div id="gameToast" class="hidden fixed bottom-24 left-1/2 -translate-x-1/2 z-40 px-4 py-2.5 rounded-xl bg-gray-900/95 border-2 border-amber-400 text-white text-xs sm:text-sm font-semibold shadow-2xl text-center max-w-md">
+  </div>
+
+  <script>
+    /* ============================================================================
+       1. BANK 25 SOAL TEKS ULASAN (BUKU & FILM) - BAHASA INDONESIA SMP KELAS 8
+       ============================================================================ */
+    const QUESTIONS_BANK = [
+      {
+        id: 1,
+        topic: "Pengertian & Tujuan Teks Ulasan",
+        passage: "",
+        question: "Teks ulasan (resensi) merupakan teks yang berisi tinjauan, penilaian, atau pertimbangan terhadap suatu karya seperti buku atau film. Tujuan utama penulisan teks ulasan adalah...",
+        options: [
+          "Menjatuhkan nama baik pengarang atau sutradara agar karyanya tidak laku",
+          "Memberikan informasi, gambaran, serta pertimbangan kualitas karya kepada pembaca atau penonton",
+          "Menceritakan seluruh isi buku atau film secara rinci dari awal hingga akhir tanpa penilaian",
+          "Mempromosikan karya dengan cara melebih-lebihkan isi cerita meskipun tidak sesuai fakta"
+        ],
+        correct: 1,
+        explanation: "Teks ulasan bertujuan memberikan gambaran umum sekaligus penilaian objektif (kelebihan dan kekurangan) sebagai pertimbangan bagi calon pembaca atau penonton."
+      },
+      {
+        id: 2,
+        topic: "Struktur Teks Ulasan: Identitas Karya",
+        passage: "Judul Film: Keluarga Cemara | Sutradara: Yandy Laurens | Produser: Anggia Kharisma | Rumah Produksi: Visinema Pictures | Durasi: 110 menit | Tahun Rilis: 2019.",
+        question: "Kutipan data di atas merupakan bagian struktur teks ulasan yang disebut...",
+        options: [
+          "Orientasi",
+          "Tafsiran / Sinopsis",
+          "Identitas Karya",
+          "Evaluasi"
+        ],
+        correct: 2,
+        explanation: "Identitas karya memuat data faktual buku atau film seperti judul, pengarang/sutradara, penerbit/rumah produksi, tahun rilis, dan tebal halaman/durasi."
+      },
+      {
+        id: 3,
+        topic: "Struktur Teks Ulasan: Orientasi",
+        passage: "Novel 'Laskar Pelangi' karya Andrea Hirata pertama kali terbit pada tahun 2005. Novel ini menjadi fenomena sastra Indonesia karena berhasil terjual jutaan eksemplar, diterjemahkan ke berbagai bahasa asing, serta diadaptasi menjadi film layar lebar yang sukses besar.",
+        question: "Paragraf tersebut termasuk bagian struktur teks ulasan berupa...",
+        options: [
+          "Orientasi, karena menjelaskan gambaran umum dan keberadaan karya",
+          "Sinopsis, karena merangkum konflik utama antar-tokoh dalam cerita",
+          "Evaluasi, karena memaparkan kelemahan gaya bahasa pengarang",
+          "Rekomendasi, karena mengajak pembaca segera membeli buku tersebut"
+        ],
+        correct: 0,
+        explanation: "Orientasi berisi pengenalan umum mengenai karya yang diulas, seperti sejarah penerbitan, penghargaan, atau kepopulerannya."
+      },
+      {
+        id: 4,
+        topic: "Struktur Teks Ulasan: Sinopsis",
+        passage: "Film 'Petualangan Sherina' mengisahkan Sherina, gadis kecil cerdas yang terpaksa pindah dari Jakarta ke Bandung mengikuti pekerjaan ayahnya. Di sekolah barunya, ia bertemu Sadam, anak manja yang sering mengganggunya, hingga suatu hari mereka berdua diculik dan harus bekerja sama untuk meloloskan diri.",
+        question: "Informasi pokok yang disampaikan pada kutipan bagian sinopsis di atas adalah...",
+        options: [
+          "Penilaian tentang kualitas tata musik dan sinematografi film",
+          "Ringkasan alur cerita dan konflik yang dialami tokoh utama",
+          "Daftar nama pemeran pendukung dan kru produksi film",
+          "Saran agar film tersebut ditonton oleh anak-anak sekolah dasar"
+        ],
+        correct: 1,
+        explanation: "Sinopsis (tafsiran isi) menyajikan ringkasan jalan cerita atau alur peristiwa penting dalam buku maupun film."
+      },
+      {
+        id: 5,
+        topic: "Struktur Teks Ulasan: Analisis",
+        passage: "Dalam novel 'Negeri 5 Menara', tokoh Alif digambarkan memiliki watak teguh pendirian dan pantang menyerah meskipun awalnya merasa terpaksa menuntut ilmu di Pondok Madani. Alur maju yang digunakan pengarang membuat perkembangan karakter Alif dan kelima sahabatnya terasa runtut.",
+        question: "Unsur intrinsik karya yang dianalisis oleh pengulas pada kutipan di atas adalah...",
+        options: [
+          "Harga buku dan desain sampul depan",
+          "Penokohan dan alur cerita",
+          "Riwayat pendidikan penerbit buku",
+          "Kualitas kertas dan ukuran huruf cetakan"
+        ],
+        correct: 1,
+        explanation: "Bagian analisis menelaah unsur-unsur pembangun karya, seperti watak tokoh (penokohan) dan alur cerita."
+      },
+      {
+        id: 6,
+        topic: "Struktur Teks Ulasan: Evaluasi",
+        passage: "Keunggulan film dokumenter ini terletak pada pengambilan gambar alam bawah laut Raja Ampat yang sangat jernih dan memukau. Sayangnya, narasi penjelasannya terkadang terlalu cepat sehingga penonton sulit mencatat istilah ilmiah yang disebutkan.",
+        question: "Fungsi bagian evaluasi dalam struktur teks ulasan seperti kutipan di atas adalah...",
+        options: [
+          "Memaparkan kelebihan dan kekurangan karya secara berimbang",
+          "Memperkenalkan biodata lengkap sutradara film",
+          "Menceritakan kembali akhir cerita (ending) secara lengkap",
+          "Menjelaskan tahun pembuatan dan lokasi syuting film"
+        ],
+        correct: 0,
+        explanation: "Evaluasi berisi penilaian pengulas mengenai keunggulan (kelebihan) sekaligus kelemahan (kekurangan) karya."
+      },
+      {
+        id: 7,
+        topic: "Struktur Teks Ulasan: Rangkuman / Rekomendasi",
+        passage: "Terlepas dari beberapa bagian alur yang terasa lambat di pertengahan cerita, novel 'Sang Pemimpi' tetap sangat layak dibaca oleh pelajar SMP dan SMA karena sarat akan nilai persahabatan, kerja keras, dan keberanian bermimpi besar.",
+        question: "Kutipan tersebut merupakan bagian penutup teks ulasan yang disebut...",
+        options: [
+          "Identitas buku",
+          "Orientasi",
+          "Sinopsis",
+          "Rangkuman dan rekomendasi"
+        ],
+        correct: 3,
+        explanation: "Rangkuman/rekomendasi berisi simpulan akhir penilaian serta saran kepada kelompok pembaca/penonton tertentu."
+      },
+      {
+        id: 8,
+        topic: "Urutan Struktur Teks Ulasan",
+        passage: "",
+        question: "Urutan struktur teks ulasan yang tepat dari awal hingga akhir adalah...",
+        options: [
+          "Identitas karya → Orientasi → Sinopsis → Analisis → Evaluasi → Rangkuman",
+          "Orientasi → Identitas karya → Evaluasi → Sinopsis → Rangkuman → Analisis",
+          "Sinopsis → Orientasi → Identitas karya → Rangkuman → Evaluasi → Analisis",
+          "Identitas karya → Evaluasi → Rangkuman → Sinopsis → Orientasi → Analisis"
+        ],
+        correct: 0,
+        explanation: "Struktur sistematis teks ulasan dimulai dari Identitas karya, Orientasi, Sinopsis (Tafsiran), Analisis, Evaluasi, hingga Rangkuman/Rekomendasi."
+      },
+      {
+        id: 9,
+        topic: "Kaidah Kebahasaan: Konjungsi Penerang",
+        passage: "Sutradara film 'Sokola Rimba' menegaskan bahwa pendidikan bagi masyarakat adat harus disesuaikan dengan kearifan lokal dan kebutuhan lingkungan mereka.",
+        question: "Kata yang berfungsi sebagai konjungsi penerang dalam kalimat tersebut adalah...",
+        options: [
+          "bagi",
+          "bahwa",
+          "dengan",
+          "dan"
+        ],
+        correct: 1,
+        explanation: "Konjungsi penerang (seperti 'bahwa', 'yakni', 'yaitu') berfungsi menjelaskan pernyataan sebelumnya."
+      },
+      {
+        id: 10,
+        topic: "Kaidah Kebahasaan: Konjungsi Temporal",
+        passage: "Sejak ayahnya jatuh sakit, Abah harus bekerja serabutan demi menghidupi keluarga. Kemudian, mereka terpaksa menjual rumah di kota dan pindah ke desa terpencil.",
+        question: "Konjungsi temporal (penanda urutan waktu) yang terdapat pada kutipan sinopsis tersebut adalah...",
+        options: [
+          "demi dan ke",
+          "sejak dan kemudian",
+          "harus dan terpaksa",
+          "di dan dan"
+        ],
+        correct: 1,
+        explanation: "Kata 'sejak' dan 'kemudian' merupakan konjungsi temporal yang menyatakan hubungan waktu."
+      },
+      {
+        id: 11,
+        topic: "Kaidah Kebahasaan: Konjungsi Penyebab",
+        passage: "Buku panduan berkebun di lahan sempit ini sangat diminati pembaca pemula karena bahasanya mudah dipahami serta dilengkapi ilustrasi langkah demi langkah.",
+        question: "Konjungsi penyebab yang digunakan pada kalimat ulasan buku tersebut adalah...",
+        options: [
+          "serta",
+          "di",
+          "karena",
+          "ini"
+        ],
+        correct: 2,
+        explanation: "Konjungsi penyebab (kausalitas) seperti 'karena' dan 'sebab' menjelaskan alasan atau penyebab suatu penilaian."
+      },
+      {
+        id: 12,
+        topic: "Kaidah Kebahasaan: Ungkapan Saran / Rekomendasi",
+        passage: "Film bertema sejarah perjuangan ini sebaiknya ditonton oleh generasi muda agar mereka lebih menghargai jasa para pahlawan bangsa.",
+        question: "Kata yang menandai pernyataan saran atau rekomendasi pada kalimat tersebut adalah...",
+        options: [
+          "bertema",
+          "sebaiknya",
+          "agar",
+          "lebih"
+        ],
+        correct: 1,
+        explanation: "Ungkapan saran/rekomendasi ditandai kata seperti 'sebaiknya', 'hendaknya', 'harus', 'perlu', atau 'jangan'."
+      },
+      {
+        id: 13,
+        topic: "Mengidentifikasi Keunggulan Buku",
+        passage: "Novel 'Bumi' karya Tere Liye mampu membawa imajinasi pembaca bertualang ke dunia paralel yang unik. Konflik antartokohnya dikemas penuh kejutan, ditambah penggunaan bahasa yang mengalir lancar sehingga pembaca betah menyelesaikannya hingga halaman terakhir.",
+        question: "Keunggulan novel 'Bumi' berdasarkan kutipan teks ulasan di atas adalah...",
+        options: [
+          "Harganya sangat murah dan tersedia di seluruh perpustakaan desa",
+          "Alur cerita penuh kejutan dan bahasa yang mengalir sehingga menarik dibaca",
+          "Jumlah halamannya tipis sehingga dapat dibaca dalam waktu sepuluh menit",
+          "Mengisahkan kehidupan nyata penulis saat bersekolah di luar negeri"
+        ],
+        correct: 1,
+        explanation: "Kutipan menyebutkan keunggulan berupa imajinasi dunia paralel yang unik, konflik penuh kejutan, dan bahasa yang mengalir lancar."
+      },
+      {
+        id: 14,
+        topic: "Mengidentifikasi Kelemahan Film",
+        passage: "Meskipun akting para pemeran utama sangat memukau dan menyentuh emosi, efek suara latar pada beberapa adegan percakapan terdengar terlalu keras sehingga dialog tokoh kurang jelas terdengar.",
+        question: "Kelemahan film yang disorot oleh pengulas pada kutipan tersebut adalah...",
+        options: [
+          "Akting pemeran utama terasa kaku dan kurang menjiwai peran",
+          "Alur cerita terlalu singkat dan mudah ditebak sejak awal",
+          "Efek suara latar terlalu keras sehingga mengganggu kejelasan dialog",
+          "Kualitas gambar terlihat buram pada adegan malam hari"
+        ],
+        correct: 2,
+        explanation: "Pengulas secara spesifik mencatat kekurangan pada tata suara latar yang terlalu keras saat adegan dialog."
+      },
+      {
+        id: 15,
+        topic: "Menentukan Jenis Karya yang Diulas",
+        passage: "Karya setebal 214 halaman terbitan Gramedia Pustaka Utama ini memuat 15 kisah pendek bertema persahabatan remaja di berbagai daerah Nusantara. Setiap kisahnya berdiri sendiri namun memiliki benang merah nilai toleransi.",
+        question: "Berdasarkan ciri-ciri pada kutipan tersebut, karya yang sedang diulas adalah...",
+        options: [
+          "Film dokumenter",
+          "Buku kumpulan cerpen (antologi)",
+          "Naskah drama teater",
+          "Album musik daerah"
+        ],
+        correct: 1,
+        explanation: "Ciri 'tebal 214 halaman', 'penerbit', dan '15 kisah pendek yang berdiri sendiri' menunjukkan buku kumpulan cerpen."
+      },
+      {
+        id: 16,
+        topic: "Etika & Kesantunan dalam Mengulas",
+        passage: "",
+        question: "Manakah kalimat penyampaian kelemahan buku yang paling santun dan objektif dalam teks ulasan?",
+        options: [
+          "Buku ini sangat membosankan dan tidak pantas dibeli oleh siapa pun karena isinya bertele-tele.",
+          "Penulis buku ini tampaknya kurang pandai merangkai kalimat sehingga pembaca cepat mengantuk.",
+          "Penyajian beberapa istilah teknis dalam buku ini akan lebih mudah dipahami apabila dilengkapi glosarium di bagian akhir.",
+          "Jangan pernah membaca buku ini jika tidak ingin membuang waktu percuma."
+        ],
+        correct: 2,
+        explanation: "Kritik dalam teks ulasan harus disampaikan secara santun, objektif, dan disertai saran perbaikan yang membangun."
+      },
+      {
+        id: 17,
+        topic: "Melengkapi Data Identitas Film",
+        passage: "Judul: Gie | Sutradara: Riri Riza | Pemeran Utama: Nicholas Saputra | Tahun Rilis: 2005 | [...]: 147 menit.",
+        question: "Istilah yang tepat untuk melengkapi bagian rumpang [...] pada identitas film di atas adalah...",
+        options: [
+          "Tebal Halaman",
+          "Durasi",
+          "Penerbit",
+          "Nomor ISBN"
+        ],
+        correct: 1,
+        explanation: "Satuan '147 menit' pada identitas film menunjukkan lama waktu tayang atau 'Durasi'."
+      },
+      {
+        id: 18,
+        topic: "Menentukan Amanat Karya dalam Ulasan",
+        passage: "Melalui perjuangan tokoh utama yang belajar di bawah cahaya lampu minyak demi meraih beasiswa, novel ini mengajarkan bahwa keterbatasan ekonomi bukanlah penghalang untuk menggapai cita-cita setinggi langit.",
+        question: "Kutipan ulasan tersebut menonjolkan unsur intrinsik karya berupa...",
+        options: [
+          "Latar waktu",
+          "Sudut pandang",
+          "Amanat (pesan moral)",
+          "Gaya majas"
+        ],
+        correct: 2,
+        explanation: "Pesan moral atau pelajaran hidup yang ingin disampaikan pengarang kepada pembaca disebut amanat."
+      },
+      {
+        id: 19,
+        topic: "Analisis Sinematografi Ulasan Film",
+        passage: "Penggunaan pencahayaan alami saat matahari terbit di lereng gunung serta iringan musik gamelan lembut berhasil membangun suasana haru tanpa perlu banyak dialog.",
+        question: "Aspek yang dianalisis pengulas pada kutipan ulasan film di atas berkaitan dengan...",
+        options: [
+          "Sinematografi (tata cahaya) dan ilustrasi musik",
+          "Harga tiket bioskop dan jadwal penayangan",
+          "Biografi lengkap seluruh kru kamera",
+          "Kualitas cetakan poster promosi film"
+        ],
+        correct: 0,
+        explanation: "Tata cahaya (pencahayaan alami) dan ilustrasi musik merupakan unsur penting dalam analisis film."
+      },
+      {
+        id: 20,
+        topic: "Membedakan Fakta dan Opini Penilaian",
+        passage: "(1) Film 'Laskar Pelangi' dirilis pada tahun 2008 dan disutradarai oleh Riri Riza. (2) Film ini mengambil lokasi syuting di Pulau Belitung. (3) Akting para pemeran anak-anak lokal terasa sangat natural dan menyentuh hati penonton. (4) Durasi film ini adalah 125 menit.",
+        question: "Kalimat yang berisi opini penilaian pengulas pada kutipan di atas ditunjukkan oleh nomor...",
+        options: [
+          "(1)",
+          "(2)",
+          "(3)",
+          "(4)"
+        ],
+        correct: 2,
+        explanation: "Kalimat (3) memuat penilaian subjektif ('sangat natural dan menyentuh hati'), sedangkan kalimat (1), (2), dan (4) adalah fakta."
+      },
+      {
+        id: 21,
+        topic: "Menentukan Sasaran Pembaca Buku",
+        passage: "Buku 'Tips Cerdas Mengatur Waktu Belajar dan Bermain' menyajikan tabel jadwal harian, cara menghindari kecanduan gawai, serta teknik mencatat efektif dengan ilustrasi komik yang ceria.",
+        question: "Berdasarkan ulasan tersebut, sasaran pembaca yang paling tepat untuk buku ini adalah...",
+        options: [
+          "Pelajar SMP/SMA yang ingin meningkatkan kedisiplinan belajar",
+          "Dokter spesialis yang meneliti penyakit saraf",
+          "Pengusaha properti yang mencari lahan bangunan",
+          "Atlet profesional yang mempersiapkan kejuaraan dunia"
+        ],
+        correct: 0,
+        explanation: "Topik mengatur waktu belajar, menghindari kecanduan gawai, dan ilustrasi komik remaja sangat sesuai untuk pelajar."
+      },
+      {
+        id: 22,
+        topic: "Menyunting Konjungsi dalam Teks Ulasan",
+        passage: "Alur cerita film ini sebenarnya sangat menarik, tetapi bagian penutupnya terkesan terburu-buru. [Oleh karena itu], penonton tetap mendapatkan pesan moral yang mendalam dari perjuangan tokoh utamanya.",
+        question: "Konjungsi antarkalimat dalam kurung siku [Oleh karena itu] kurang tepat karena menyatakan sebab-akibat. Perbaikan yang paling tepat adalah...",
+        options: [
+          "Akibatnya",
+          "Meskipun demikian",
+          "Dengan demikian",
+          "Selanjutnya"
+        ],
+        correct: 1,
+        explanation: "Kalimat kedua menyatakan pertentangan positif terhadap kekurangan di kalimat pertama, sehingga konjungsi yang tepat adalah 'Meskipun demikian'."
+      },
+      {
+        id: 23,
+        topic: "Mengurutkan Paragraf Teks Ulasan Acak",
+        passage: "(1) Secara keseluruhan, buku ini sangat bermanfaat sebagai panduan literasi digital bagi remaja.\n(2) Buku 'Bijak Bermedia Sosial' ditulis oleh Dr. Rahmat Hidayat dan diterbitkan pada tahun 2023.\n(3) Kelebihan buku ini terletak pada contoh kasus nyata yang dekat dengan keseharian siswa, meski tata letak grafiknya masih sederhana.\n(4) Di dalamnya dibahas cara mengenali berita bohong (hoaks) serta menjaga jejak digital yang positif.",
+        question: "Urutan kalimat yang tepat agar menjadi paragraf teks ulasan yang padu adalah...",
+        options: [
+          "(2) - (4) - (3) - (1)",
+          "(1) - (2) - (3) - (4)",
+          "(4) - (3) - (2) - (1)",
+          "(2) - (3) - (1) - (4)"
+        ],
+        correct: 0,
+        explanation: "Urutan logis: (2) Identitas/Orientasi → (4) Gambaran isi → (3) Evaluasi kelebihan & kekurangan → (1) Simpulan/Rekomendasi."
+      },
+      {
+        id: 24,
+        topic: "Menentukan Simpulan Teks Ulasan",
+        passage: "Film animasi 'Nussa' menghadirkan kualitas visual yang setara dengan animasi internasional. Cerita keseharian Nussa dan Rarra yang sederhana mampu menyampaikan nilai kejujuran, rasa syukur, dan kasih sayang keluarga tanpa terkesan menggurui.",
+        question: "Simpulan yang paling sesuai dengan isi kutipan ulasan film tersebut adalah...",
+        options: [
+          "Film animasi 'Nussa' unggul dari segi kualitas visual sekaligus penyampaian nilai moral keluarga secara alami.",
+          "Film animasi 'Nussa' hanya mengutamakan kecanggihan gambar tanpa memperhatikan isi cerita.",
+          "Cerita dalam film 'Nussa' terlalu rumit sehingga sulit dipahami oleh anak-anak dan keluarga.",
+          "Film 'Nussa' merupakan satu-satunya film animasi yang diproduksi di Indonesia."
+        ],
+        correct: 0,
+        explanation: "Simpulan merangkum dua gagasan utama paragraf: keunggulan kualitas visual dan penyampaian nilai moral yang tidak menggurui."
+      },
+      {
+        id: 25,
+        topic: "Evaluasi Menyeluruh Sikap Pengulas",
+        passage: "",
+        question: "Seorang siswa diminta menulis teks ulasan terhadap novel yang baru dibacanya. Langkah paling tepat agar ulasannya berkualitas dan bertanggung jawab adalah...",
+        options: [
+          "Menyalin ulasan dari internet tanpa membaca bukunya terlebih dahulu",
+          "Membaca buku secara tuntas, mencatat identitas, meringkas isi, lalu menilai kelebihan dan kekurangannya berdasarkan bukti teks",
+          "Hanya menuliskan kekurangan buku agar terlihat sebagai kritikus yang tegas",
+          "Menceritakan seluruh rahasia akhir cerita agar pembaca tidak perlu membeli bukunya"
+        ],
+        correct: 1,
+        explanation: "Pengulas yang baik harus membaca karya secara utuh dan memberikan penilaian objektif berdasarkan fakta/bukti di dalam karya."
+      }
+    ];
+
+    /* ============================================================================
+       2. VARIABEL STATE PERMAINAN & ATURAN MINECRAFT
+       ============================================================================ */
+    const MAP_SIZE = 48;
+    const TILE_SIZE = 42;
+    const TOTAL_EXAM_SECONDS = 40 * 60; // 40 menit = 2400 detik
+
+    // Jenis Tile Peta
+    const TILE = {
+      GRASS: 0,
+      PATH: 1,
+      WOOD_FLOOR: 2,
+      BOOKSHELF: 3,
+      TREE: 4,
+      STONE: 5,
+      WATER: 6,
+      SAND: 7,
+      LAVA: 8,
+      CRACKED_MINE: 9, // Aturan Tidak Tertulis: Never Dig Straight Down!
+      CINEMA_CARPET: 10,
+      CINEMA_WALL: 11,
+      BRIDGE: 12,
+      FLOWER_GRASS: 13
+    };
+
+    // State Utama Game
+    const gameState = {
+      started: false,
+      ended: false,
+      paused: false,
+      studentName: "",
+      studentClass: "",
+      gameMode: "Survival", // Survival | Adventure | Creative
+      soundEnabled: true,
+
+      // Timer 40 menit
+      remainingSeconds: TOTAL_EXAM_SECONDS,
+      elapsedSeconds: 0,
+
+      // Siklus Waktu Minecraft (0..1 -> 0-0.45 Siang, 0.45-0.55 Senja, 0.55-0.90 Malam, 0.90-1.0 Fajar)
+      dayCycleProgress: 0.12,
+
+      // Aturan Sistem Resmi (Game Rules)
+      gameRules: {
+        KeepInventory: true,
+        MobSpawning: true,
+        DoFireTick: true,
+        DaylightCycle: true,
+        CommandBlockOutput: true
+      },
+
+      // Statistik & Inventaris Pemain
+      player: {
+        x: 24,
+        y: 24,
+        px: 24 * TILE_SIZE,
+        py: 24 * TILE_SIZE,
+        dir: "down",
+        health: 10,
+        maxHealth: 10,
+        hunger: 10,
+        maxHunger: 10,
+        selectedSlot: 0,
+        swingTimer: 0,
+        invulnerableTimer: 0,
+        inventory: {
+          torch: 6,
+          apple: 4,
+          wood: 4,
+          stone: 2
+        }
+      },
+
+      // Progress 25 Soal
+      chests: [], // { id, x, y, solved, attempts, earnedPoints, biome }
+      activeChestId: null,
+      targetChestId: 1,
+      solvedCount: 0,
+      totalScore: 0,
+
+      // Pencapaian & Statistik
+      torchesPlaced: 0,
+      mobsDefeated: 0,
+      placedTorches: [], // { x, y }
+      mobs: [], // { id, type, x, y, hp, moveCooldown }
+      particles: [], // efek partikel blok, api, emerald
+
+      // Input
+      keys: {},
+      touchDir: { x: 0, y: 0 },
+      moveCooldown: 0
+    };
+
+    let mapGrid = [];
+    let audioCtx = null;
+    let lastTimestamp = 0;
+    let timerInterval = null;
+
+    /* ============================================================================
+       3. EFEK SUARA SINTETIS (WEB AUDIO API - TANPA URL EKSTERNAL)
+       ============================================================================ */
+    function initAudio() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (AudioContext) {
+          audioCtx = new AudioContext();
+        }
+      }
+      if (audioCtx && audioCtx.state === "suspended") {
+        audioCtx.resume();
+      }
+    }
+
+    function playSound(type) {
+      if (!gameState.soundEnabled) return;
+      try {
+        initAudio();
+        if (!audioCtx) return;
+
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        if (type === "step") {
+          osc.type = "triangle";
+          osc.frequency.setValueAtTime(140, now);
+          osc.frequency.exponentialRampToValueAtTime(70, now + 0.05);
+          gain.gain.setValueAtTime(0.04, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+          osc.start(now);
+          osc.stop(now + 0.05);
+        } else if (type === "mine") {
+          osc.type = "square";
+          osc.frequency.setValueAtTime(220, now);
+          osc.frequency.exponentialRampToValueAtTime(95, now + 0.12);
+          gain.gain.setValueAtTime(0.09, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+          osc.start(now);
+          osc.stop(now + 0.12);
+        } else if (type === "torch") {
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(420, now);
+          osc.frequency.exponentialRampToValueAtTime(680, now + 0.14);
+          gain.gain.setValueAtTime(0.08, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+          osc.start(now);
+          osc.stop(now + 0.14);
+        } else if (type === "correct") {
+          osc.type = "triangle";
+          osc.frequency.setValueAtTime(523.25, now); // C5
+          osc.frequency.setValueAtTime(659.25, now + 0.1); // E5
+          osc.frequency.setValueAtTime(783.99, now + 0.2); // G5
+          osc.frequency.setValueAtTime(1046.5, now + 0.3); // C6
+          gain.gain.setValueAtTime(0.14, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+          osc.start(now);
+          osc.stop(now + 0.5);
+        } else if (type === "wrong") {
+          osc.type = "sawtooth";
+          osc.frequency.setValueAtTime(180, now);
+          osc.frequency.linearRampToValueAtTime(125, now + 0.28);
+          gain.gain.setValueAtTime(0.11, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+          osc.start(now);
+          osc.stop(now + 0.3);
+        } else if (type === "hurt") {
+          osc.type = "sawtooth";
+          osc.frequency.setValueAtTime(150, now);
+          osc.frequency.exponentialRampToValueAtTime(60, now + 0.18);
+          gain.gain.setValueAtTime(0.14, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+          osc.start(now);
+          osc.stop(now + 0.18);
+        } else if (type === "victory") {
+          const notes = [523.25, 659.25, 783.99, 1046.5, 783.99, 1046.5];
+          notes.forEach((freq, idx) => {
+            const o = audioCtx.createOscillator();
+            const g = audioCtx.createGain();
+            o.type = "triangle";
+            o.connect(g);
+            g.connect(audioCtx.destination);
+            o.frequency.setValueAtTime(freq, now + idx * 0.12);
+            g.gain.setValueAtTime(0.14, now + idx * 0.12);
+            g.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.12 + 0.25);
+            o.start(now + idx * 0.12);
+            o.stop(now + idx * 0.12 + 0.25);
+          });
+        }
+      } catch (e) {
+        // Abaikan jika browser membatasi audio
+      }
+    }
+
+    function toggleSound() {
+      gameState.soundEnabled = !gameState.soundEnabled;
+      document.getElementById("soundToggleBtn").textContent = gameState.soundEnabled ? "🔊" : "🔇";
+      showToast(gameState.soundEnabled ? "🔊 Efek suara diaktifkan" : "🔇 Efek suara dimatikan");
+    }
+
+    /* ============================================================================
+       4. PEMBANGKITAN DUNIA MINICRAFT (48x48 TILE & 25 PETI SOAL)
+       ============================================================================ */
+    function generateWorld() {
+      mapGrid = Array.from({ length: MAP_SIZE }, () => Array(MAP_SIZE).fill(TILE.GRASS));
+
+      // 1. Batas Air Laut di Tepian Pulau
+      for (let y = 0; y < MAP_SIZE; y++) {
+        for (let x = 0; x < MAP_SIZE; x++) {
+          if (x <= 1 || y <= 1 || x >= MAP_SIZE - 2 || y >= MAP_SIZE - 2) {
+            mapGrid[y][x] = TILE.WATER;
+          } else if (x === 2 || y === 2 || x === MAP_SIZE - 3 || y === MAP_SIZE - 3) {
+            mapGrid[y][x] = TILE.SAND;
+          }
+        }
+      }
+
+      // 2. Sungai Melintang & Jembatan Kayu
+      for (let x = 2; x < MAP_SIZE - 2; x++) {
+        const riverY = 15 + Math.round(Math.sin(x * 0.25) * 1.5);
+        mapGrid[riverY][x] = TILE.WATER;
+        mapGrid[riverY + 1][x] = TILE.WATER;
+      }
+      // Jembatan utama di x = 12, 24, 36
+      [12, 24, 36].forEach(bx => {
+        for (let y = 13; y <= 18; y++) {
+          if (mapGrid[y][bx] === TILE.WATER) mapGrid[y][bx] = TILE.BRIDGE;
+          if (mapGrid[y][bx + 1] === TILE.WATER) mapGrid[y][bx + 1] = TILE.BRIDGE;
+        }
+      });
+
+      // 3. Desa Pustaka (Tengah Peta: x 20..28, y 20..28) - Safe Zone
+      for (let y = 20; y <= 28; y++) {
+        for (let x = 20; x <= 28; x++) {
+          mapGrid[y][x] = TILE.WOOD_FLOOR;
+        }
+      }
+      // Rak buku di tepi Desa Pustaka (tidak boleh dirusak - Unwritten Rule!)
+      for (let x = 21; x <= 27; x++) {
+        if (x !== 24) {
+          mapGrid[20][x] = TILE.BOOKSHELF;
+          mapGrid[28][x] = TILE.BOOKSHELF;
+        }
+      }
+      // Jalan setapak dari desa ke 4 penjuru
+      for (let i = 6; i <= 41; i++) {
+        if (mapGrid[24][i] === TILE.GRASS) mapGrid[24][i] = TILE.PATH;
+        if (mapGrid[i][24] === TILE.GRASS) mapGrid[i][24] = TILE.PATH;
+      }
+
+      // 4. Bioma Teater Bioskop Kuno (Kanan Bawah: x 31..42, y 31..42)
+      for (let y = 31; y <= 42; y++) {
+        for (let x = 31; x <= 42; x++) {
+          mapGrid[y][x] = TILE.CINEMA_CARPET;
+          if ((y === 31 || y === 42 || x === 31 || x === 42) && x !== 36 && y !== 36) {
+            mapGrid[y][x] = TILE.CINEMA_WALL;
+          }
+        }
+      }
+
+      // 5. Bioma Tambang Batu & Lava (Kiri Atas: x 4..18, y 4..12)
+      for (let y = 4; y <= 12; y++) {
+        for (let x = 4; x <= 18; x++) {
+          if (mapGrid[y][x] === TILE.GRASS) {
+            const r = (x * 7 + y * 13) % 11;
+            if (r === 0 || r === 1) mapGrid[y][x] = TILE.LAVA;
+            else if (r === 2 || r === 3) mapGrid[y][x] = TILE.CRACKED_MINE; // Never Dig Straight Down!
+            else if (r === 4 || r === 5) mapGrid[y][x] = TILE.STONE;
+            else mapGrid[y][x] = TILE.PATH;
+          }
+        }
+      }
+
+      // 6. Sebar Pohon, Bunga, dan Batu di Area Rumput
+      for (let y = 4; y < MAP_SIZE - 4; y++) {
+        for (let x = 4; x < MAP_SIZE - 4; x++) {
+          if (mapGrid[y][x] === TILE.GRASS) {
+            // Hindari area spawn langsung
+            if (Math.abs(x - 24) <= 2 && Math.abs(y - 24) <= 2) continue;
+            const hash = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453;
+            const rand = hash - Math.floor(hash);
+            if (rand < 0.11) mapGrid[y][x] = TILE.TREE;
+            else if (rand < 0.15) mapGrid[y][x] = TILE.STONE;
+            else if (rand < 0.24) mapGrid[y][x] = TILE.FLOWER_GRASS;
+          }
+        }
+      }
+
+      // 7. Tempatkan Obor Awal di Desa Pustaka
+      gameState.placedTorches = [
+        { x: 21, y: 21 },
+        { x: 27, y: 21 },
+        { x: 21, y: 27 },
+        { x: 27, y: 27 }
+      ];
+
+      // 8. Tempatkan 25 Peti Soal Teks Ulasan di Koordinat Strategis & Mudah Dijangkau
+      const chestCoords = [
+        { x: 26, y: 23 }, // #1 Desa Pustaka (dekat spawn agar langsung paham)
+        { x: 22, y: 22 }, // #2 Desa Pustaka
+        { x: 26, y: 26 }, // #3 Desa Pustaka
+        { x: 18, y: 24 }, // #4 Jalan Barat
+        { x: 13, y: 22 }, // #5 Hutan Barat
+        { x: 8,  y: 26 }, // #6 Hutan Barat Daya
+        { x: 7,  y: 33 }, // #7 Rimba Selatan-Barat
+        { x: 13, y: 38 }, // #8 Hutan Selatan
+        { x: 19, y: 34 }, // #9 Padang Bunga Selatan
+        { x: 24, y: 39 }, // #10 Ujung Jalan Selatan
+        { x: 28, y: 33 }, // #11 Gerbang Bioskop
+        { x: 34, y: 34 }, // #12 Teater Bioskop Kuno
+        { x: 39, y: 34 }, // #13 Teater Bioskop Kuno
+        { x: 34, y: 39 }, // #14 Teater Bioskop Kuno
+        { x: 39, y: 39 }, // #15 Teater Bioskop Kuno
+        { x: 31, y: 24 }, // #16 Jalan Timur
+        { x: 38, y: 22 }, // #17 Hutan Timur
+        { x: 41, y: 27 }, // #18 Pesisir Timur
+        { x: 36, y: 11 }, // #19 Utara Timur (seberang jembatan)
+        { x: 41, y: 6  }, // #20 Tanjung Timur Laut
+        { x: 29, y: 8  }, // #21 Padang Utara
+        { x: 24, y: 6  }, // #22 Monumen Utara
+        { x: 16, y: 8  }, // #23 Tambang Batu
+        { x: 10, y: 6  }, // #24 Tambang Kristal
+        { x: 6,  y: 10 }  // #25 Puncak Tambang Barat Laut
+      ];
+
+      gameState.chests = chestCoords.map((pos, index) => {
+        // Pastikan petak peti & sekitarnya bisa diinjak
+        mapGrid[pos.y][pos.x] = (pos.x >= 31 && pos.y >= 31) ? TILE.CINEMA_CARPET : TILE.PATH;
+        return {
+          id: index + 1,
+          x: pos.x,
+          y: pos.y,
+          solved: false,
+          attempts: 0,
+          earnedPoints: 0
+        };
+      });
+
+      // 9. Spawn Beberapa Monster Awal di Luar Desa (jika MobSpawning true & bukan Creative)
+      gameState.mobs = [];
+      if (gameState.gameRules.MobSpawning && gameState.gameMode !== "Creative") {
+        const mobSpots = [
+          { x: 10, y: 25, type: "zombie" },
+          { x: 14, y: 35, type: "skeleton" },
+          { x: 37, y: 25, type: "zombie" },
+          { x: 38, y: 10, type: "skeleton" },
+          { x: 12, y: 8,  type: "zombie" },
+          { x: 25, y: 10, type: "zombie" }
+        ];
+        mobSpots.forEach((m, i) => {
+          gameState.mobs.push({
+            id: i + 1,
+            type: m.type,
+            x: m.x,
+            y: m.y,
+            hp: 2,
+            moveCooldown: 0
+          });
+        });
+      }
+    }
+
+    /* ============================================================================
+       5. KONTROL MULAI PERMAINAN & VALIDASI IDENTITAS SISWA
+       ============================================================================ */
+    function selectStartMode(mode) {
+      gameState.gameMode = mode;
+      ["Survival", "Adventure", "Creative"].forEach(m => {
+        const btn = document.getElementById(`modeBtn-${m}`);
+        if (m === mode) {
+          btn.className = "mode-select-btn p-2.5 rounded-xl border-2 border-emerald-500 bg-emerald-950/70 text-center transition";
+        } else {
+          btn.className = "mode-select-btn p-2.5 rounded-xl border-2 border-gray-700 bg-gray-900/70 text-center transition hover:border-gray-500";
+        }
+      });
+    }
+
+    function startGame() {
+      const nameInput = document.getElementById("studentNameInput").value.trim();
+      const classInput = document.getElementById("studentClassInput").value.trim();
+      const nameErr = document.getElementById("nameErrorMsg");
+      const classErr = document.getElementById("classErrorMsg");
+
+      let valid = true;
+      if (nameInput.length < 3) {
+        nameErr.classList.remove("hidden");
+        valid = false;
+      } else {
+        nameErr.classList.add("hidden");
+      }
+
+      if (classInput.length < 1) {
+        classErr.classList.remove("hidden");
+        valid = false;
+      } else {
+        classErr.classList.add("hidden");
+      }
+
+      if (!valid) return;
+
+      initAudio();
+      gameState.studentName = nameInput;
+      gameState.studentClass = classInput;
+      gameState.started = true;
+
+      // Update HUD Identitas
+      document.getElementById("hudStudentName").textContent = gameState.studentName;
+      document.getElementById("hudStudentClass").textContent = `Kelas: ${gameState.studentClass}`;
+      document.getElementById("hudModeBadge").textContent = gameState.gameMode;
+
+      // Beralih ke Layar Game
+      document.getElementById("startScreen").classList.add("hidden");
+      document.getElementById("gameScreen").classList.remove("hidden");
+      document.getElementById("gameScreen").classList.add("flex");
+
+      generateWorld();
+      resizeCanvas();
+      updateHUD();
+      addChatLog(`[Sistem] Halo ${gameState.studentName}! Mode: ${gameState.gameMode}.`, "text-emerald-300");
+      addChatLog(`[Misi] Buka 25 Peti Soal Teks Ulasan dalam 40 menit!`, "text-amber-300");
+
+      // Mulai Timer 40 Menit (1 detik nyata)
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(onSecondTick, 1000);
+    }
+
+    /* ============================================================================
+       6. TIMER 40 MENIT & SIKLUS SIANG-MALAM MINECRAFT
+       ============================================================================ */
+    function onSecondTick() {
+      if (!gameState.started || gameState.ended || gameState.paused) return;
+
+      gameState.remainingSeconds--;
+      gameState.elapsedSeconds++;
+
+      // Siklus Waktu Minecraft (DaylightCycle)
+      if (gameState.gameRules.DaylightCycle) {
+        // 1 siklus penuh = 180 detik (3 menit) agar siswa mengalami siang, senja, malam, fajar
+        gameState.dayCycleProgress = (gameState.dayCycleProgress + 1 / 180) % 1;
+      }
+
+      // Mekanik Survival: Hunger berkurang perlahan setiap 35 detik
+      if (gameState.gameMode === "Survival" && gameState.elapsedSeconds % 35 === 0) {
+        if (gameState.player.hunger > 0) {
+          gameState.player.hunger--;
+        } else if (gameState.player.health > 1) {
+          gameState.player.health--;
+          addChatLog("[Survival] Kamu kelaparan! Makan Apel [3] untuk memulihkan tenaga.", "text-rose-400");
+        }
+      }
+
+      // Regenerasi darah jika hunger >= 8 di Survival
+      if (gameState.gameMode === "Survival" && gameState.elapsedSeconds % 8 === 0) {
+        if (gameState.player.hunger >= 8 && gameState.player.health < gameState.player.maxHealth) {
+          gameState.player.health++;
+        }
+      }
+
+      // Spawn monster tambahan saat malam jika MobSpawning aktif
+      if (
+        gameState.gameRules.MobSpawning &&
+        gameState.gameMode !== "Creative" &&
+        isNightTime() &&
+        gameState.elapsedSeconds % 18 === 0 &&
+        gameState.mobs.length < 10
+      ) {
+        spawnNightMobNearPlayer();
+      }
+
+      updateHUD();
+
+      if (gameState.remainingSeconds <= 0) {
+        finishExam(true);
+      }
+    }
+
+    function isNightTime() {
+      return gameState.dayCycleProgress >= 0.55 && gameState.dayCycleProgress < 0.90;
+    }
+
+    function getDayPhaseLabel() {
+      const p = gameState.dayCycleProgress;
+      if (p < 0.45) return "☀️ Siang";
+      if (p < 0.55) return "🌇 Senja";
+      if (p < 0.90) return "🌙 Malam";
+      return "🌅 Fajar";
+    }
+
+    /* ============================================================================
+       7. LOGIKA GERAKAN PEMAIN, AKSI MINECRAFT & ATURAN KOMUNITAS
+       ============================================================================ */
+    function isTileWalkable(tx, ty) {
+      if (tx < 0 || ty < 0 || tx >= MAP_SIZE || ty >= MAP_SIZE) return false;
+      const t = mapGrid[ty][tx];
+      if (t === TILE.WATER || t === TILE.TREE || t === TILE.STONE || t === TILE.BOOKSHELF || t === TILE.CINEMA_WALL) {
+        return false;
+      }
+      return true;
+    }
+
+    function tryMovePlayer(dx, dy) {
+      if (gameState.paused || gameState.ended) return;
+
+      if (dx < 0) gameState.player.dir = "left";
+      else if (dx > 0) gameState.player.dir = "right";
+      else if (dy < 0) gameState.player.dir = "up";
+      else if (dy > 0) gameState.player.dir = "down";
+
+      const nx = gameState.player.x + dx;
+      const ny = gameState.player.y + dy;
+
+      if (!isTileWalkable(nx, ny)) return;
+
+      gameState.player.x = nx;
+      gameState.player.y = ny;
+      playSound("step");
+
+      const currentTile = mapGrid[ny][nx];
+
+      // Cek Aturan Resmi: DoFireTick & Lava
+      if (currentTile === TILE.LAVA && gameState.gameMode !== "Creative") {
+        if (gameState.gameRules.DoFireTick) {
+          damagePlayer(3, "🔥 Terkena Lava! (Aturan DoFireTick aktif — hati-hati di area tambang!)");
+        } else {
+          addChatLog("[GameRule] DoFireTick=false melindungi kamu dari panas lava!", "text-sky-300");
+        }
+      }
+
+      // Cek Aturan Tidak Tertulis: Never Dig Straight Down (Lantai Tambang Retak)
+      if (currentTile === TILE.CRACKED_MINE) {
+        showToast("⚠️ Hati-hati! Lantai tambang retak. Ingat aturan: Never Dig Straight Down!");
+        addChatLog("[Aturan Komunitas] Lantai retak terdeteksi! Jangan gali lurus ke bawah!", "text-amber-300");
+      }
+
+      // Cek apakah menginjak / tepat di sebelah Peti Soal yang belum selesai
+      const chestOnTile = gameState.chests.find(c => !c.solved && c.x === nx && c.y === ny);
+      if (chestOnTile) {
+        openQuestionModal(chestOnTile.id);
+      }
+
+      updateHUD();
+    }
+
+    function getFacingTile() {
+      let fx = gameState.player.x;
+      let fy = gameState.player.y;
+      if (gameState.player.dir === "up") fy--;
+      if (gameState.player.dir === "down") fy++;
+      if (gameState.player.dir === "left") fx--;
+      if (gameState.player.dir === "right") fx++;
+      return { x: fx, y: fy };
+    }
+
+    // Aksi Utama (Spasi / E / Tombol Aksi)
+    function performPrimaryAction() {
+      if (gameState.paused || gameState.ended) return;
+      initAudio();
+      gameState.player.swingTimer = 0.22;
+
+      // 1. Prioritas: Cek apakah ada Peti Soal di sekitar pemain (jarak <= 1.5 blok)
+      const nearbyChest = findNearestUnsolvedChest(1.6);
+      if (nearbyChest) {
+        openQuestionModal(nearbyChest.id);
+        return;
+      }
+
+      // 2. Cek apakah ada Monster di depan/sekitar pemain untuk diserang
+      const facing = getFacingTile();
+      const mobIndex = gameState.mobs.findIndex(
+        m => (Math.abs(m.x - facing.x) <= 1 && Math.abs(m.y - facing.y) <= 1) ||
+             (Math.abs(m.x - gameState.player.x) <= 1 && Math.abs(m.y - gameState.player.y) <= 1)
+      );
+      if (mobIndex !== -1) {
+        const mob = gameState.mobs[mobIndex];
+        mob.hp--;
+        playSound("mine");
+        spawnParticles(mob.x, mob.y, "#ef4444", 8);
+        if (mob.hp <= 0) {
+          gameState.mobs.splice(mobIndex, 1);
+          gameState.mobsDefeated++;
+          gameState.player.inventory.apple++;
+          addChatLog(`⚔️ Mengalahkan ${mob.type === "zombie" ? "Zombie" : "Skeleton"}! (+1 Apel)`, "text-emerald-300");
+          updateHUD();
+        } else {
+          addChatLog(`⚔️ Menyerang ${mob.type === "zombie" ? "Zombie" : "Skeleton"}! (Sisa HP: ${mob.hp})`, "text-amber-300");
+        }
+        return;
+      }
+
+      // 3. Jika Slot 2 (Obor) aktif, pasang obor
+      if (gameState.player.selectedSlot === 1) {
+        placeTorchAction();
+        return;
+      }
+
+      // 4. Jika Slot 3 (Apel) aktif, makan apel
+      if (gameState.player.selectedSlot === 2) {
+        eatAppleAction();
+        return;
+      }
+
+      // 5. Menebang Pohon / Menambang Batu di depan pemain
+      if (facing.x >= 0 && facing.y >= 0 && facing.x < MAP_SIZE && facing.y < MAP_SIZE) {
+        const targetTile = mapGrid[facing.y][facing.x];
+
+        // Aturan Mode Adventure & Aturan Komunitas (Jaga Properti Desa)
+        if (targetTile === TILE.BOOKSHELF || targetTile === TILE.CINEMA_WALL) {
+          playSound("wrong");
+          showToast("🚫 Aturan Komunitas: Jangan merusak bangunan Desa Pustaka & Bioskop!");
+          addChatLog("[Aturan Komunitas] Dilarang merusak properti desa/fasilitas umum!", "text-rose-400");
+          return;
+        }
+
+        if (gameState.gameMode === "Adventure") {
+          showToast("🧭 Mode Adventure: Kamu tidak bisa menghancurkan blok lingkungan.");
+          return;
+        }
+
+        if (targetTile === TILE.TREE) {
+          mapGrid[facing.y][facing.x] = TILE.GRASS;
+          gameState.player.inventory.wood += 2;
+          if (Math.random() < 0.45) gameState.player.inventory.apple += 1;
+          playSound("mine");
+          spawnParticles(facing.x, facing.y, "#65a30d", 10);
+          addChatLog("🪓 Menebang pohon (+2 Kayu).", "text-emerald-300");
+          updateHUD();
+        } else if (targetTile === TILE.STONE) {
+          mapGrid[facing.y][facing.x] = TILE.PATH;
+          gameState.player.inventory.stone += 2;
+          playSound("mine");
+          spawnParticles(facing.x, facing.y, "#9ca3af", 10);
+          addChatLog("⛏️ Menambang batu (+2 Batu).", "text-sky-300");
+          updateHUD();
+        } else if (targetTile === TILE.CRACKED_MINE) {
+          // Melanggar aturan Never Dig Straight Down!
+          mapGrid[facing.y][facing.x] = TILE.LAVA;
+          playSound("hurt");
+          spawnParticles(facing.x, facing.y, "#f97316", 14);
+          showToast("🔥 MELANGGAR ATURAN: Never Dig Straight Down! Muncul lava dari bawah tanah!");
+          addChatLog("[Peringatan] Kamu menggali lantai retak dan menemukan lava!", "text-rose-400");
+          if (gameState.gameMode !== "Creative" && gameState.gameRules.DoFireTick) {
+            damagePlayer(2, "🔥 Terkena cipratan lava karena menggali lurus ke bawah!");
+          }
+        }
+      }
+    }
+
+    function placeTorchAction() {
+      if (gameState.paused || gameState.ended) return;
+      if (gameState.player.inventory.torch <= 0 && gameState.gameMode !== "Creative") {
+        showToast("🔦 Obor habis! Tekan 'Craft Obor' menggunakan Kayu & Batu.");
+        return;
+      }
+
+      const px = gameState.player.x;
+      const py = gameState.player.y;
+      const alreadyHasTorch = gameState.placedTorches.some(t => t.x === px && t.y === py);
+      if (alreadyHasTorch) {
+        showToast("🔦 Sudah ada obor terpasang di petak ini.");
+        return;
+      }
+
+      if (gameState.gameMode !== "Creative") {
+        gameState.player.inventory.torch--;
+      }
+      gameState.placedTorches.push({ x: px, y: py });
+      gameState.torchesPlaced++;
+      playSound("torch");
+      spawnParticles(px, py, "#facc15", 8);
+      addChatLog("🔦 Memasang obor! Area sekitar menjadi terang & aman dari monster.", "text-amber-300");
+      updateHUD();
+    }
+
+    function eatAppleAction() {
+      if (gameState.paused || gameState.ended) return;
+      if (gameState.player.inventory.apple <= 0 && gameState.gameMode !== "Creative") {
+        showToast("🍎 Apel habis! Tebang pohon di hutan untuk mencari apel.");
+        return;
+      }
+      if (gameState.player.hunger >= gameState.player.maxHunger && gameState.player.health >= gameState.player.maxHealth) {
+        showToast("🍗 Darah dan Lapar sudah penuh!");
+        return;
+      }
+
+      if (gameState.gameMode !== "Creative") {
+        gameState.player.inventory.apple--;
+      }
+      gameState.player.hunger = Math.min(gameState.player.maxHunger, gameState.player.hunger + 3);
+      gameState.player.health = Math.min(gameState.player.maxHealth, gameState.player.health + 2);
+      playSound("torch");
+      addChatLog("🍎 Memakan Apel (+3 Lapar, +2 Darah).", "text-rose-300");
+      updateHUD();
+    }
+
+    function craftTorch() {
+      if (gameState.gameMode === "Creative") {
+        gameState.player.inventory.torch += 4;
+        playSound("torch");
+        updateHUD();
+        return;
+      }
+      if (gameState.player.inventory.wood >= 1 && gameState.player.inventory.stone >= 1) {
+        gameState.player.inventory.wood -= 1;
+        gameState.player.inventory.stone -= 1;
+        gameState.player.inventory.torch += 4;
+        playSound("torch");
+        addChatLog("🔨 Berhasil merakit 4 Obor dari 1 Kayu + 1 Batu!", "text-amber-300");
+        updateHUD();
+      } else {
+        showToast("🔨 Butuh minimal 1 Kayu dan 1 Batu untuk membuat 4 Obor!");
+      }
+    }
+
+    function selectHotbar(slot) {
+      gameState.player.selectedSlot = slot;
+      [0, 1, 2].forEach(i => {
+        const el = document.getElementById(`slot-${i}`);
+        if (i === slot) el.classList.add("active");
+        else el.classList.remove("active");
+      });
+      if (slot === 2) eatAppleAction();
+    }
+
+    function damagePlayer(amount, reasonMsg) {
+      if (gameState.gameMode === "Creative") return;
+      if (gameState.player.invulnerableTimer > 0) return;
+
+      gameState.player.health = Math.max(0, gameState.player.health - amount);
+      gameState.player.invulnerableTimer = 1.2;
+      playSound("hurt");
+      if (reasonMsg) addChatLog(reasonMsg, "text-rose-400");
+
+      if (gameState.player.health <= 0) {
+        // Respawn di Desa Pustaka sesuai Gamerule KeepInventory!
+        gameState.player.x = 24;
+        gameState.player.y = 24;
+        gameState.player.health = gameState.player.maxHealth;
+        gameState.player.hunger = gameState.player.maxHunger;
+
+        if (gameState.gameRules.KeepInventory) {
+          showToast("💫 Kamu respawn di Desa Pustaka! Item tetap aman karena KeepInventory = TRUE.");
+          addChatLog("[GameRule] KeepInventory=true: Seluruh item & progres 25 soal tetap aman!", "text-emerald-300");
+        } else {
+          gameState.player.inventory.wood = Math.max(0, gameState.player.inventory.wood - 2);
+          gameState.player.inventory.stone = Math.max(0, gameState.player.inventory.stone - 1);
+          showToast("💫 Kamu respawn di Desa Pustaka! Sebagian kayu/batu terjatuh (KeepInventory = FALSE).");
+          addChatLog("[GameRule] KeepInventory=false: Sebagian sumber daya terjatuh saat kalah.", "text-amber-300");
+        }
+      }
+      updateHUD();
+    }
+
+    function spawnNightMobNearPlayer() {
+      const angles = [0, Math.PI / 2, Math.PI, (3 * Math.PI) / 2];
+      const ang = angles[Math.floor(Math.random() * angles.length)];
+      const mx = Math.round(gameState.player.x + Math.cos(ang) * 7);
+      const my = Math.round(gameState.player.y + Math.sin(ang) * 7);
+
+      if (!isTileWalkable(mx, my)) return;
+      // Jangan spawn dekat obor! (Aturan Tidak Tertulis: Torch mencegah spawn monster)
+      const nearTorch = gameState.placedTorches.some(t => Math.hypot(t.x - mx, t.y - my) <= 5);
+      if (nearTorch) return;
+
+      gameState.mobs.push({
+        id: Date.now(),
+        type: Math.random() < 0.5 ? "zombie" : "skeleton",
+        x: mx,
+        y: my,
+        hp: 2,
+        moveCooldown: 0
+      });
+    }
+
+    /* ============================================================================
+       8. SISTEM 25 SOAL TEKS ULASAN & PENILAIAN OTOMATIS
+       ============================================================================ */
+    function findNearestUnsolvedChest(maxDist = Infinity) {
+      let best = null;
+      let bestDist = maxDist;
+      for (const c of gameState.chests) {
+        if (!c.solved) {
+          const d = Math.hypot(c.x - gameState.player.x, c.y - gameState.player.y);
+          if (d <= bestDist) {
+            bestDist = d;
+            best = c;
+          }
+        }
+      }
+      return best;
+    }
+
+    function interactNearestChest() {
+      const target = gameState.chests.find(c => !c.solved && c.id === gameState.targetChestId) || findNearestUnsolvedChest();
+      if (!target) {
+        finishExam(false);
+        return;
+      }
+      // Jika sudah dekat (<= 2 blok) langsung buka, jika masih jauh pindahkan pemain dekat peti agar lancar dimainkan!
+      const dist = Math.hypot(target.x - gameState.player.x, target.y - gameState.player.y);
+      if (dist > 2.2) {
+        gameState.player.x = target.x;
+        gameState.player.y = target.y;
+        gameState.player.px = target.x * TILE_SIZE;
+        gameState.player.py = target.y * TILE_SIZE;
+        addChatLog(`🧭 Cepat berpindah menuju Peti Ulasan #${target.id}...`, "text-sky-300");
+      }
+      openQuestionModal(target.id);
+    }
+
+    function openQuestionModal(chestId) {
+      const chest = gameState.chests.find(c => c.id === chestId);
+      const qData = QUESTIONS_BANK.find(q => q.id === chestId);
+      if (!chest || !qData) return;
+
+      if (chest.solved) {
+        showToast(`✅ Peti #${chestId} sudah kamu selesaikan dengan benar!`);
+        return;
+      }
+
+      gameState.paused = true;
+      gameState.activeChestId = chestId;
+
+      document.getElementById("qChestBadge").textContent = `PETI ULASAN #${chest.id} / 25`;
+      document.getElementById("qTopicBadge").textContent = `Materi: ${qData.topic}`;
+
+      const maxPtsNow = Math.max(2, 4 - chest.attempts * 0.5);
+      document.getElementById("qAttemptBadge").textContent = `Percobaan ke-${chest.attempts + 1} (${maxPtsNow} Poin)`;
+
+      const passageBox = document.getElementById("qPassageBox");
+      if (qData.passage && qData.passage.trim() !== "") {
+        passageBox.textContent = `"${qData.passage}"`;
+        passageBox.classList.remove("hidden");
+      } else {
+        passageBox.classList.add("hidden");
+      }
+
+      document.getElementById("qText").textContent = qData.question;
+
+      const feedbackBox = document.getElementById("qFeedbackBox");
+      feedbackBox.classList.add("hidden");
+      document.getElementById("qNextActionBox").classList.add("hidden");
+
+      const optionsContainer = document.getElementById("qOptionsContainer");
+      optionsContainer.innerHTML = "";
+      const letters = ["A", "B", "C", "D"];
+
+      qData.options.forEach((optText, idx) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "w-full text-left p-3.5 rounded-xl bg-gray-900 hover:bg-gray-800 border-2 border-gray-700 hover:border-amber-400 text-gray-100 text-xs sm:text-sm transition flex items-start gap-3 cursor-pointer";
+        btn.innerHTML = `
+          <span class="w-7 h-7 rounded-lg bg-gray-800 border border-gray-600 flex items-center justify-center font-bold text-amber-300 shrink-0">${letters[idx]}</span>
+          <span class="pt-0.5 leading-relaxed">${optText}</span>
+        `;
+        btn.onclick = () => submitQuestionAnswer(idx, btn);
+        optionsContainer.appendChild(btn);
+      });
+
+      document.getElementById("questionModal").classList.remove("hidden");
+    }
+
+    function submitQuestionAnswer(selectedIndex, clickedBtn) {
+      const chest = gameState.chests.find(c => c.id === gameState.activeChestId);
+      const qData = QUESTIONS_BANK.find(q => q.id === gameState.activeChestId);
+      if (!chest || !qData || chest.solved) return;
+
+      const feedbackBox = document.getElementById("qFeedbackBox");
+      const allButtons = document.getElementById("qOptionsContainer").querySelectorAll("button");
+
+      if (selectedIndex === qData.correct) {
+        // JAWABAN BENAR!
+        playSound("correct");
+        chest.solved = true;
+
+        // Hitung poin (Percobaan 1 = 4 poin, ke-2 = 3.5, ke-3 = 3, dst. minimal 2 poin)
+        const earned = Math.max(2, 4 - chest.attempts * 0.5);
+        chest.earnedPoints = earned;
+
+        gameState.solvedCount++;
+        gameState.totalScore = Math.round((gameState.chests.reduce((acc, c) => acc + c.earnedPoints, 0)) * 10) / 10;
+
+        // Hadiah item Minecraft
+        gameState.player.inventory.torch += 2;
+        if (chest.id % 3 === 0) gameState.player.inventory.apple += 1;
+        spawnParticles(chest.x, chest.y, "#10b981", 16);
+
+        // Kunci tombol & tandai hijau
+        allButtons.forEach((b, i) => {
+          b.disabled = true;
+          if (i === qData.correct) {
+            b.className = "w-full text-left p-3.5 rounded-xl bg-emerald-950/90 border-2 border-emerald-400 text-emerald-100 text-xs sm:text-sm flex items-start gap-3";
+          } else {
+            b.className += " opacity-50";
+          }
+        });
+
+        feedbackBox.className = "mt-4 p-4 rounded-xl bg-emerald-950/80 border border-emerald-500 text-emerald-200 text-xs sm:text-sm leading-relaxed";
+        feedbackBox.innerHTML = `
+          <div class="font-bold text-emerald-300 mb-1">🎉 JAWABAN BENAR! (+${earned} Poin & +2 Obor)</div>
+          <div>${qData.explanation}</div>
+        `;
+        feedbackBox.classList.remove("hidden");
+        document.getElementById("qNextActionBox").classList.remove("hidden");
+
+        // Update target kompas ke peti berikutnya yang belum selesai
+        const nextUnsolved = findNearestUnsolvedChest();
+        if (nextUnsolved) gameState.targetChestId = nextUnsolved.id;
+
+        addChatLog(`✅ Peti #${chest.id} Benar! Progres: ${gameState.solvedCount}/25 Soal.`, "text-emerald-300");
+        updateHUD();
+      } else {
+        // JAWABAN SALAH - Siswa wajib mencoba lagi sampai BENAR
+        playSound("wrong");
+        chest.attempts++;
+        clickedBtn.disabled = true;
+        clickedBtn.className = "w-full text-left p-3.5 rounded-xl bg-rose-950/80 border-2 border-rose-500 text-rose-200 text-xs sm:text-sm flex items-start gap-3 opacity-75";
+
+        const nextPts = Math.max(2, 4 - chest.attempts * 0.5);
+        document.getElementById("qAttemptBadge").textContent = `Percobaan ke-${chest.attempts + 1} (${nextPts} Poin)`;
+
+        feedbackBox.className = "mt-4 p-4 rounded-xl bg-rose-950/80 border border-rose-500 text-rose-200 text-xs sm:text-sm leading-relaxed";
+        feedbackBox.innerHTML = `
+          <div class="font-bold text-rose-300 mb-1">❌ Kurang Tepat! Coba pilih jawaban lain sampai benar.</div>
+          <div>Perhatikan kembali kata kunci pada soal atau kutipan teks di atas!</div>
+        `;
+        feedbackBox.classList.remove("hidden");
+      }
+    }
+
+    function closeQuestionModal() {
+      document.getElementById("questionModal").classList.add("hidden");
+      gameState.paused = false;
+      gameState.activeChestId = null;
+    }
+
+    function closeQuestionModalAndContinue() {
+      closeQuestionModal();
+      if (gameState.solvedCount >= 25) {
+        finishExam(false);
+      }
+    }
+
+    /* ============================================================================
+       9. MODAL ATURAN MINECRAFT (/GAMERULE) & DAFTAR 25 SOAL
+       ============================================================================ */
+    function openRulesModal() {
+      gameState.paused = true;
+      updateGameRuleButtonsUI();
+      document.getElementById("rulesModal").classList.remove("hidden");
+    }
+
+    function closeRulesModal() {
+      document.getElementById("rulesModal").classList.add("hidden");
+      gameState.paused = false;
+    }
+
+    function toggleGameRule(ruleName) {
+      gameState.gameRules[ruleName] = !gameState.gameRules[ruleName];
+      const val = gameState.gameRules[ruleName];
+      updateGameRuleButtonsUI();
+      playSound("torch");
+
+      if (ruleName === "MobSpawning" && !val) {
+        gameState.mobs = [];
+      }
+
+      if (gameState.gameRules.CommandBlockOutput || ruleName === "CommandBlockOutput") {
+        addChatLog(`[/gamerule] ${ruleName} diubah menjadi ${val.toString().toUpperCase()}`, "text-amber-300");
+      }
+    }
+
+    function updateGameRuleButtonsUI() {
+      Object.keys(gameState.gameRules).forEach(rule => {
+        const btn = document.getElementById(`grBtn-${rule}`);
+        if (!btn) return;
+        const active = gameState.gameRules[rule];
+        btn.textContent = active ? "TRUE" : "FALSE";
+        btn.className = active
+          ? "px-3 py-1.5 rounded-lg font-bold text-xs bg-emerald-600 text-white cursor-pointer"
+          : "px-3 py-1.5 rounded-lg font-bold text-xs bg-rose-700 text-white cursor-pointer";
+      });
+    }
+
+    function openQuestionListModal() {
+      gameState.paused = true;
+      const grid = document.getElementById("chestGridContainer");
+      grid.innerHTML = "";
+
+      gameState.chests.forEach(c => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        if (c.solved) {
+          btn.className = "p-2.5 rounded-xl bg-emerald-800/80 border-2 border-emerald-400 text-emerald-100 font-bold text-xs flex flex-col items-center justify-center";
+          btn.innerHTML = `<span>#${c.id}</span><span class="text-[10px]">✅ ${c.earnedPoints}p</span>`;
+        } else if (c.id === gameState.targetChestId) {
+          btn.className = "p-2.5 rounded-xl bg-amber-700/80 border-2 border-amber-300 text-white font-bold text-xs flex flex-col items-center justify-center cursor-pointer";
+          btn.innerHTML = `<span>#${c.id}</span><span class="text-[10px]">🧭 Target</span>`;
+          btn.onclick = () => {
+            closeQuestionListModal();
+            openQuestionModal(c.id);
+          };
+        } else {
+          btn.className = "p-2.5 rounded-xl bg-gray-800 hover:bg-gray-700 border-2 border-gray-600 text-gray-200 font-bold text-xs flex flex-col items-center justify-center cursor-pointer";
+          btn.innerHTML = `<span>#${c.id}</span><span class="text-[10px]">📦 Buka</span>`;
+          btn.onclick = () => {
+            gameState.targetChestId = c.id;
+            closeQuestionListModal();
+            updateHUD();
+            showToast(`🧭 Kompas diarahkan ke Peti Ulasan #${c.id}`);
+          };
+        }
+        grid.appendChild(btn);
+      });
+
+      document.getElementById("radarSummaryText").textContent = `${gameState.solvedCount} / 25 Soal Benar`;
+      document.getElementById("questionListModal").classList.remove("hidden");
+    }
+
+    function closeQuestionListModal() {
+      document.getElementById("questionListModal").classList.add("hidden");
+      gameState.paused = false;
+    }
+
+    /* ============================================================================
+       10. LAYAR AKHIR & GENERATOR LAPORAN NILAI UNTUK GRUP KELAS
+       ============================================================================ */
+    function finishExam(isTimeout) {
+      if (gameState.ended) return;
+      gameState.ended = true;
+      gameState.paused = true;
+      if (timerInterval) clearInterval(timerInterval);
+
+      playSound("victory");
+
+      const finalScore = Number.isInteger(gameState.totalScore)
+        ? Math.min(100, gameState.totalScore)
+        : Math.min(100, Number(gameState.totalScore.toFixed(1)));
+      const mins = Math.floor(gameState.elapsedSeconds / 60);
+      const secs = gameState.elapsedSeconds % 60;
+      const timeStr = `${mins} menit ${secs} detik`;
+
+      document.getElementById("resStudentName").textContent = gameState.studentName;
+      document.getElementById("resStudentClass").textContent = gameState.studentClass;
+      document.getElementById("resCorrectCount").textContent = `${gameState.solvedCount} / 25`;
+      document.getElementById("resFinalScore").textContent = finalScore;
+      document.getElementById("resTimeTaken").textContent = timeStr;
+      document.getElementById("resGameMode").textContent = gameState.gameMode;
+      document.getElementById("resTorchesPlaced").textContent = gameState.torchesPlaced;
+      document.getElementById("resMobsDefeated").textContent = gameState.mobsDefeated;
+
+      if (isTimeout && gameState.solvedCount < 25) {
+        document.getElementById("resultSubtitle").textContent = "Waktu 40 menit telah berakhir. Berikut rekap hasil pengerjaanmu:";
+      }
+
+      const predikat =
+        finalScore >= 90 ? "Sangat Baik (Master Pengulas)" :
+        finalScore >= 80 ? "Baik (Pengulas Andal)" :
+        finalScore >= 70 ? "Cukup Baik (Petualang Literasi)" :
+        "Perlu Berlatih Lagi";
+
+      const reportText =
+`🏆 *LAPORAN HASIL GAME MINICRAFT TEKS ULASAN*
+📚 *Materi:* Teks Ulasan Buku & Film (SMP Kelas 8)
+━━━━━━━━━━━━━━━━━━━━━━
+👤 *Nama Lengkap:* ${gameState.studentName}
+🏫 *Kelas / Absen:* ${gameState.studentClass}
+✅ *Soal Terjawab Benar:* ${gameState.solvedCount} / 25 Soal
+🌟 *Nilai Akhir:* ${finalScore} / 100
+🏅 *Predikat:* ${predikat}
+⏱️ *Waktu Pengerjaan:* ${timeStr}
+🎮 *Mode & Aktivitas:* ${gameState.gameMode} | Obor: ${gameState.torchesPlaced} | Mob: ${gameState.mobsDefeated}
+━━━━━━━━━━━━━━━━━━━━━━`;
+
+      document.getElementById("shareReportText").value = reportText;
+      document.getElementById("resultScreen").classList.remove("hidden");
+    }
+
+    function copyReportToClipboard() {
+      const textarea = document.getElementById("shareReportText");
+      textarea.select();
+      textarea.setSelectionRange(0, 99999);
+      try {
+        document.execCommand("copy");
+        const toast = document.getElementById("copyToast");
+        toast.classList.remove("hidden");
+        playSound("torch");
+      } catch (err) {
+        showToast("Silakan blok teks laporan di atas dan salin manual.");
+      }
+    }
+
+    /* ============================================================================
+       11. PEMBARUAN HUD, BIOMA & KOMPAS
+       ============================================================================ */
+    function getBiomeName(x, y) {
+      if (x >= 20 && x <= 28 && y >= 20 && y <= 28) return "Desa Pustaka (Zona Aman)";
+      if (x >= 31 && x <= 42 && y >= 31 && y <= 42) return "Teater Bioskop Kuno";
+      if (x >= 4 && x <= 18 && y >= 4 && y <= 12) return "Tambang Batu & Lava";
+      if (y >= 14 && y <= 17) return "Jembatan Sungai";
+      return "Hutan Rindang Nusantara";
+    }
+
+    function updateHUD() {
+      // Timer
+      const m = String(Math.floor(gameState.remainingSeconds / 60)).padStart(2, "0");
+      const s = String(gameState.remainingSeconds % 60).padStart(2, "0");
+      const timerEl = document.getElementById("hudTimer");
+      timerEl.textContent = `${m}:${s}`;
+      if (gameState.remainingSeconds <= 300) {
+        timerEl.classList.add("text-rose-400");
+      }
+
+      // Siklus Waktu
+      document.getElementById("hudDayPhase").textContent = getDayPhaseLabel();
+
+      // Progress & Skor
+      document.getElementById("hudSolvedCount").textContent = `${gameState.solvedCount} / 25`;
+      document.getElementById("hudProgressBar").style.width = `${(gameState.solvedCount / 25) * 100}%`;
+      const displayScore = Number.isInteger(gameState.totalScore)
+        ? gameState.totalScore
+        : gameState.totalScore.toFixed(1);
+      document.getElementById("hudScore").textContent = displayScore;
+
+      // Health & Hunger
+      const heartsCount = Math.ceil(gameState.player.health / 2);
+      const hungerCount = Math.ceil(gameState.player.hunger / 2);
+      document.getElementById("healthHearts").textContent =
+        "❤️".repeat(heartsCount) + "🖤".repeat(Math.max(0, 5 - heartsCount));
+      document.getElementById("hungerIcons").textContent =
+        "🍗".repeat(hungerCount) + "🦴".repeat(Math.max(0, 5 - hungerCount));
+
+      // Inventaris
+      document.getElementById("invTorch").textContent = gameState.player.inventory.torch;
+      document.getElementById("invApple").textContent = gameState.player.inventory.apple;
+      document.getElementById("invWood").textContent = gameState.player.inventory.wood;
+      document.getElementById("invStone").textContent = gameState.player.inventory.stone;
+
+      // Bioma & Kompas Peti Terdekat
+      document.getElementById("biomeLabel").textContent = getBiomeName(gameState.player.x, gameState.player.y);
+
+      const target =
+        gameState.chests.find(c => !c.solved && c.id === gameState.targetChestId) ||
+        findNearestUnsolvedChest();
+
+      if (target) {
+        gameState.targetChestId = target.id;
+        const dx = target.x - gameState.player.x;
+        const dy = target.y - gameState.player.y;
+        const dist = Math.round(Math.hypot(dx, dy));
+        let dirText = "";
+        if (dy < -1) dirText += "Utara ";
+        else if (dy > 1) dirText += "Selatan ";
+        if (dx > 1) dirText += "Timur";
+        else if (dx < -1) dirText += "Barat";
+        if (!dirText) dirText = "Tepat di dekatmu!";
+
+        document.getElementById("nearestChestLabel").textContent =
+          `🧭 Peti #${target.id}: ${dist} blok (${dirText.trim()})`;
+      } else {
+        document.getElementById("nearestChestLabel").textContent = "🏆 Semua 25 Peti Selesai!";
+      }
+    }
+
+    function addChatLog(msg, colorClass = "text-gray-200") {
+      const box = document.getElementById("chatLogBox");
+      const line = document.createElement("div");
+      line.className = `${colorClass} font-mono leading-snug`;
+      line.textContent = msg;
+      box.appendChild(line);
+      while (box.children.length > 4) {
+        box.removeChild(box.firstChild);
+      }
+    }
+
+    let toastTimeout = null;
+    function showToast(msg) {
+      const toast = document.getElementById("gameToast");
+      toast.textContent = msg;
+      toast.classList.remove("hidden");
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.add("hidden");
+      }, 3200);
+    }
+
+    /* ============================================================================
+       12. RENDER GRAFIS PIXEL-ART 2D CANVAS & ANIMATION LOOP
+       ============================================================================ */
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+    const minimapCanvas = document.getElementById("minimapCanvas");
+    const mctx = minimapCanvas.getContext("2d");
+
+    function resizeCanvas() {
+      if (!canvas.parentElement) return;
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+
+    function spawnParticles(tx, ty, color, count = 8) {
+      for (let i = 0; i < count; i++) {
+        gameState.particles.push({
+          x: tx * TILE_SIZE + TILE_SIZE / 2,
+          y: ty * TILE_SIZE + TILE_SIZE / 2,
+          vx: (Math.random() - 0.5) * 110,
+          vy: (Math.random() - 0.5) * 110,
+          size: 4 + Math.random() * 4,
+          color,
+          life: 0.45 + Math.random() * 0.25
+        });
+      }
+    }
+
+    function updateSimulation(dt) {
+      if (!gameState.started || gameState.paused || gameState.ended) return;
+
+      // Gerakan kontinu dari keyboard atau touch D-pad
+      gameState.moveCooldown -= dt;
+      if (gameState.moveCooldown <= 0) {
+        let dx = 0;
+        let dy = 0;
+        if (gameState.keys["ArrowUp"] || gameState.keys["w"] || gameState.keys["W"] || gameState.touchDir.y < 0) dy = -1;
+        else if (gameState.keys["ArrowDown"] || gameState.keys["s"] || gameState.keys["S"] || gameState.touchDir.y > 0) dy = 1;
+        else if (gameState.keys["ArrowLeft"] || gameState.keys["a"] || gameState.keys["A"] || gameState.touchDir.x < 0) dx = -1;
+        else if (gameState.keys["ArrowRight"] || gameState.keys["d"] || gameState.keys["D"] || gameState.touchDir.x > 0) dx = 1;
+
+        if (dx !== 0 || dy !== 0) {
+          tryMovePlayer(dx, dy);
+          gameState.moveCooldown = 0.14;
+        }
+      }
+
+      // Interpolasi posisi piksel pemain agar gerakan mulus
+      const targetPx = gameState.player.x * TILE_SIZE;
+      const targetPy = gameState.player.y * TILE_SIZE;
+      gameState.player.px += (targetPx - gameState.player.px) * Math.min(1, dt * 18);
+      gameState.player.py += (targetPy - gameState.player.py) * Math.min(1, dt * 18);
+
+      if (gameState.player.swingTimer > 0) gameState.player.swingTimer -= dt;
+      if (gameState.player.invulnerableTimer > 0) gameState.player.invulnerableTimer -= dt;
+
+      // Update AI Monster (Zombie & Skeleton)
+      if (gameState.gameRules.MobSpawning && gameState.gameMode !== "Creative") {
+        for (const mob of gameState.mobs) {
+          mob.moveCooldown -= dt;
+          if (mob.moveCooldown <= 0) {
+            mob.moveCooldown = 0.85 + Math.random() * 0.4;
+            const distToPlayer = Math.hypot(gameState.player.x - mob.x, gameState.player.y - mob.y);
+
+            // Monster menjauh dari obor!
+            const nearTorch = gameState.placedTorches.find(t => Math.hypot(t.x - mob.x, t.y - mob.y) <= 3);
+            let stepX = 0;
+            let stepY = 0;
+
+            if (nearTorch) {
+              stepX = Math.sign(mob.x - nearTorch.x);
+              stepY = Math.sign(mob.y - nearTorch.y);
+            } else if (distToPlayer < 8) {
+              if (Math.abs(gameState.player.x - mob.x) > Math.abs(gameState.player.y - mob.y)) {
+                stepX = Math.sign(gameState.player.x - mob.x);
+              } else {
+                stepY = Math.sign(gameState.player.y - mob.y);
+              }
+            } else {
+              const dirs = [[1,0],[-1,0],[0,1],[0,-1],[0,0]];
+              const pick = dirs[Math.floor(Math.random() * dirs.length)];
+              stepX = pick[0];
+              stepY = pick[1];
+            }
+
+            const nmx = mob.x + stepX;
+            const nmy = mob.y + stepY;
+            if (isTileWalkable(nmx, nmy)) {
+              mob.x = nmx;
+              mob.y = nmy;
+            }
+
+            if (mob.x === gameState.player.x && mob.y === gameState.player.y) {
+              damagePlayer(2, `💥 Diserang ${mob.type === "zombie" ? "Zombie" : "Skeleton"}! Pasang Obor [2] atau serang [Spasi]!`);
+            }
+          }
+        }
+      }
+
+      // Update Partikel
+      for (let i = gameState.particles.length - 1; i >= 0; i--) {
+        const p = gameState.particles[i];
+        p.x += p.vx * dt;
+        p.y += p.vy * dt;
+        p.life -= dt;
+        if (p.life <= 0) gameState.particles.splice(i, 1);
+      }
+    }
+
+    function drawTile(t, sx, sy, tx, ty, timeSec) {
+      if (t === TILE.GRASS || t === TILE.FLOWER_GRASS) {
+        ctx.fillStyle = ((tx + ty) % 2 === 0) ? "#4d8232" : "#46782d";
+        ctx.fillRect(sx, sy, TILE_SIZE, TILE_SIZE);
+        // Tekstur rumput pixel
+        ctx.fillStyle = "#5c963d";
+        ctx.fillRect(sx + 6, sy + 8, 4, 4);
+        ctx.fillRect(sx + 26, sy + 24, 4, 4);
+        if (t === TILE.FLOWER_GRASS) {
+          ctx.fillStyle = (tx % 2 === 0) ? "#facc15" : "#f43f5e";
+          ctx.fillRect(sx + 16, sy + 16, 6, 6);
+          ctx.fillStyle = "#fef08a";
+          ctx.fillRect(sx + 18, sy + 18, 2, 2);
+        }
+      } else if (t === TILE.PATH) {
+        ctx.fillStyle = "#9c7a54";
+        ctx.fillRect(sx, sy, TILE_SIZE, TILE_SIZE);
+        ctx.fillStyle = "#856542";
+        ctx.fillRect(sx + 4, sy + 6, 8, 6);
+        ctx.fillRect(sx + 24, sy + 22, 10, 6);
+      } else if (t === TILE.WOOD_FLOOR || t === TILE.BRIDGE) {
+        ctx.fillStyle = "#b08450";
+        ctx.fillRect(sx, sy, TILE_SIZE, TILE_SIZE);
+        ctx.strokeStyle = "#7c5830";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(sx + 1, sy + 1, TILE_SIZE - 2, TILE_SIZE / 2 - 1);
+        ctx.strokeRect(sx + 1, sy + TILE_SIZE / 2, TILE_SIZE - 2, TILE_SIZE / 2 - 1);
+      } else if (t === TILE.BOOKSHELF) {
+        ctx.fillStyle = "#6b4423";
+        ctx.fillRect(sx, sy, TILE_SIZE, TILE_SIZE);
+        const bookColors = ["#ef4444", "#3b82f6", "#facc15", "#10b981"];
+        for (let row = 0; row < 2; row++) {
+          for (let b = 0; b < 4; b++) {
+            ctx.fillStyle = bookColors[(b + row) % bookColors.length];
+            ctx.fillRect(sx + 5 + b * 8, sy + 5 + row * 19, 6, 13);
+          }
+        }
+      } else if (t === TILE.TREE) {
+        // Rumput dasar
+        ctx.fillStyle = "#46782d";
+        ctx.fillRect(sx, sy, TILE_SIZE, TILE_SIZE);
+        // Batang pohon
+        ctx.fillStyle = "#5c3a21";
+        ctx.fillRect(sx + 15, sy + 22, 12, 16);
+        // Daun rimbun blok
+        ctx.fillStyle = "#245418";
+        ctx.fillRect(sx + 4, sy + 4, 34, 24);
+        ctx.fillStyle = "#337322";
+        ctx.fillRect(sx + 7, sy + 6, 28, 18);
+      } else if (t === TILE.STONE) {
+        ctx.fillStyle = "#46782d";
+        ctx.fillRect(sx, sy, TILE_SIZE, TILE_SIZE);
+        ctx.fillStyle = "#6b7280";
+        ctx.fillRect(sx + 4, sy + 6, 34, 30);
+        ctx.fillStyle = "#9ca3af";
+        ctx.fillRect(sx + 8, sy + 9, 14, 10);
+        // Bintik batu bara
+        ctx.fillStyle = "#1f2937";
+        ctx.fillRect(sx + 24, sy + 20, 7, 7);
+      } else if (t === TILE.WATER) {
+        ctx.fillStyle = "#1d63b8";
+        ctx.fillRect(sx, sy, TILE_SIZE, TILE_SIZE);
+        const wave = Math.sin(timeSec * 3 + tx + ty) * 3;
+        ctx.fillStyle = "#3898ec";
+        ctx.fillRect(sx + 6 + wave, sy + 12, 14, 3);
+        ctx.fillRect(sx + 18 - wave, sy + 28, 14, 3);
+      } else if (t === TILE.SAND) {
+        ctx.fillStyle = "#e5cf8b";
+        ctx.fillRect(sx, sy, TILE_SIZE, TILE_SIZE);
+      } else if (t === TILE.LAVA) {
+        ctx.fillStyle = "#dc2626";
+        ctx.fillRect(sx, sy, TILE_SIZE, TILE_SIZE);
+        const pulse = Math.sin(timeSec * 4 + tx * 2) * 3;
+        ctx.fillStyle = "#f97316";
+        ctx.fillRect(sx + 4, sy + 4, TILE_SIZE - 8, TILE_SIZE - 8);
+        ctx.fillStyle = "#facc15";
+        ctx.fillRect(sx + 10 + pulse, sy + 12, 12, 8);
+      } else if (t === TILE.CRACKED_MINE) {
+        ctx.fillStyle = "#52525b";
+        ctx.fillRect(sx, sy, TILE_SIZE, TILE_SIZE);
+        ctx.strokeStyle = "#18181b";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(sx + 8, sy + 6);
+        ctx.lineTo(sx + 20, sy + 20);
+        ctx.lineTo(sx + 14, sy + 34);
+        ctx.moveTo(sx + 20, sy + 20);
+        ctx.lineTo(sx + 34, sy + 26);
+        ctx.stroke();
+      } else if (t === TILE.CINEMA_CARPET) {
+        ctx.fillStyle = "#881337";
+        ctx.fillRect(sx, sy, TILE_SIZE, TILE_SIZE);
+        ctx.strokeStyle = "#be123c";
+        ctx.strokeRect(sx + 2, sy + 2, TILE_SIZE - 4, TILE_SIZE - 4);
+      } else if (t === TILE.CINEMA_WALL) {
+        ctx.fillStyle = "#334155";
+        ctx.fillRect(sx, sy, TILE_SIZE, TILE_SIZE);
+        ctx.fillStyle = "#facc15";
+        ctx.fillRect(sx + 16, sy + 16, 10, 10);
+      }
+    }
+
+    function renderGame() {
+      if (!gameState.started) return;
+      const w = canvas.width;
+      const h = canvas.height;
+      const timeSec = performance.now() / 1000;
+
+      ctx.clearRect(0, 0, w, h);
+
+      // Kamera berpusat pada pemain
+      const camX = gameState.player.px + TILE_SIZE / 2 - w / 2;
+      const camY = gameState.player.py + TILE_SIZE / 2 - h / 2;
+
+      const startCol = Math.max(0, Math.floor(camX / TILE_SIZE) - 1);
+      const endCol = Math.min(MAP_SIZE - 1, Math.ceil((camX + w) / TILE_SIZE) + 1);
+      const startRow = Math.max(0, Math.floor(camY / TILE_SIZE) - 1);
+      const endRow = Math.min(MAP_SIZE - 1, Math.ceil((camY + h) / TILE_SIZE) + 1);
+
+      // 1. Gambar Peta Tile
+      for (let ty = startRow; ty <= endRow; ty++) {
+        for (let tx = startCol; tx <= endCol; tx++) {
+          const sx = Math.floor(tx * TILE_SIZE - camX);
+          const sy = Math.floor(ty * TILE_SIZE - camY);
+          drawTile(mapGrid[ty][tx], sx, sy, tx, ty, timeSec);
+        }
+      }
+
+      // 2. Gambar Obor yang Terpasang
+      for (const torch of gameState.placedTorches) {
+        const sx = Math.floor(torch.x * TILE_SIZE - camX);
+        const sy = Math.floor(torch.y * TILE_SIZE - camY);
+        if (sx < -TILE_SIZE || sy < -TILE_SIZE || sx > w + TILE_SIZE || sy > h + TILE_SIZE) continue;
+
+        ctx.fillStyle = "#78350f";
+        ctx.fillRect(sx + 18, sy + 16, 6, 18);
+        const flicker = Math.sin(timeSec * 12 + torch.x) * 2;
+        ctx.fillStyle = "#f97316";
+        ctx.fillRect(sx + 16, sy + 10, 10, 8);
+        ctx.fillStyle = "#fef08a";
+        ctx.fillRect(sx + 18, sy + 11 + flicker * 0.3, 6, 5);
+      }
+
+      // 3. Gambar 25 Peti Soal Teks Ulasan
+      for (const chest of gameState.chests) {
+        const sx = Math.floor(chest.x * TILE_SIZE - camX);
+        const sy = Math.floor(chest.y * TILE_SIZE - camY);
+        if (sx < -TILE_SIZE || sy < -TILE_SIZE || sx > w + TILE_SIZE || sy > h + TILE_SIZE) continue;
+
+        const bounce = chest.solved ? 0 : Math.sin(timeSec * 4 + chest.id) * 2.5;
+
+        // Kotak Peti
+        ctx.fillStyle = chest.solved ? "#065f46" : "#92400e";
+        ctx.fillRect(sx + 5, sy + 9 + bounce, 32, 26);
+        ctx.strokeStyle = chest.solved ? "#34d399" : "#facc15";
+        ctx.lineWidth = 2.5;
+        ctx.strokeRect(sx + 5, sy + 9 + bounce, 32, 26);
+
+        // Pengunci peti
+        ctx.fillStyle = chest.solved ? "#34d399" : "#facc15";
+        ctx.fillRect(sx + 18, sy + 18 + bounce, 6, 7);
+
+        // Label Nomor Peti (#1 - #25)
+        ctx.fillStyle = "rgba(0,0,0,0.8)";
+        ctx.fillRect(sx + 7, sy - 6 + bounce, 28, 13);
+        ctx.fillStyle = chest.solved ? "#6ee7b7" : "#fde047";
+        ctx.font = "bold 10px Inter, sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(chest.solved ? `✓${chest.id}` : `#${chest.id}`, sx + 21, sy + 4 + bounce);
+      }
+
+      // 4. Gambar Monster (Zombie & Skeleton)
+      for (const mob of gameState.mobs) {
+        const sx = Math.floor(mob.x * TILE_SIZE - camX);
+        const sy = Math.floor(mob.y * TILE_SIZE - camY);
+        if (sx < -TILE_SIZE || sy < -TILE_SIZE || sx > w + TILE_SIZE || sy > h + TILE_SIZE) continue;
+
+        // Badan
+        ctx.fillStyle = mob.type === "zombie" ? "#1d4ed8" : "#cbd5e1";
+        ctx.fillRect(sx + 10, sy + 18, 22, 18);
+        // Kepala
+        ctx.fillStyle = mob.type === "zombie" ? "#4d7c0f" : "#f8fafc";
+        ctx.fillRect(sx + 9, sy + 4, 24, 16);
+        // Mata
+        ctx.fillStyle = "#111827";
+        ctx.fillRect(sx + 13, sy + 10, 4, 4);
+        ctx.fillRect(sx + 25, sy + 10, 4, 4);
+      }
+
+      // 5. Gambar Karakter Pemain (Gaya Blok Minicraft)
+      const psx = Math.floor(gameState.player.px - camX);
+      const psy = Math.floor(gameState.player.py - camY);
+
+      if (!(gameState.player.invulnerableTimer > 0 && Math.floor(timeSec * 16) % 2 === 0)) {
+        // Bayangan
+        ctx.fillStyle = "rgba(0,0,0,0.35)";
+        ctx.fillRect(psx + 9, psy + 34, 24, 6);
+        // Baju Cyan Steve
+        ctx.fillStyle = "#0284c7";
+        ctx.fillRect(psx + 10, psy + 18, 22, 16);
+        // Kepala
+        ctx.fillStyle = "#f1c27d";
+        ctx.fillRect(psx + 9, psy + 3, 24, 16);
+        // Rambut
+        ctx.fillStyle = "#451a03";
+        ctx.fillRect(psx + 9, psy + 3, 24, 5);
+        // Mata
+        ctx.fillStyle = "#1e293b";
+        ctx.fillRect(psx + 13, psy + 10, 4, 4);
+        ctx.fillRect(psx + 25, psy + 10, 4, 4);
+
+        // Alat di tangan (Beliung / Obor / Apel)
+        const swingOffset = gameState.player.swingTimer > 0 ? -8 : 0;
+        if (gameState.player.selectedSlot === 0) {
+          ctx.fillStyle = "#38bdf8";
+          ctx.fillRect(psx + 31, psy + 14 + swingOffset, 8, 4);
+          ctx.fillStyle = "#78350f";
+          ctx.fillRect(psx + 33, psy + 16 + swingOffset, 3, 12);
+        } else if (gameState.player.selectedSlot === 1) {
+          ctx.fillStyle = "#facc15";
+          ctx.fillRect(psx + 32, psy + 13, 6, 6);
+          ctx.fillStyle = "#78350f";
+          ctx.fillRect(psx + 33, psy + 18, 4, 10);
+        } else {
+          ctx.fillStyle = "#ef4444";
+          ctx.fillRect(psx + 31, psy + 17, 7, 7);
+        }
+      }
+
+      // 6. Gambar Partikel
+      for (const p of gameState.particles) {
+        ctx.fillStyle = p.color;
+        ctx.fillRect(p.x - camX, p.y - camY, p.size, p.size);
+      }
+
+      // 7. Efek Pencahayaan Siklus Waktu (Senja / Malam) + Cahaya Obor
+      const phase = gameState.dayCycleProgress;
+      let darkness = 0;
+      if (phase >= 0.45 && phase < 0.55) darkness = ((phase - 0.45) / 0.1) * 0.55;
+      else if (phase >= 0.55 && phase < 0.90) darkness = 0.58;
+      else if (phase >= 0.90) darkness = ((1 - phase) / 0.1) * 0.58;
+
+      if (darkness > 0.02) {
+        ctx.save();
+        ctx.fillStyle = `rgba(8, 12, 28, ${darkness.toFixed(2)})`;
+        ctx.fillRect(0, 0, w, h);
+
+        // Lubang cahaya hangat di sekitar pemain dan setiap obor yang dipasang!
+        ctx.globalCompositeOperation = "destination-out";
+        const lightSources = [
+          { x: psx + TILE_SIZE / 2, y: psy + TILE_SIZE / 2, r: gameState.player.selectedSlot === 1 ? 170 : 115 }
+        ];
+        for (const t of gameState.placedTorches) {
+          lightSources.push({
+            x: t.x * TILE_SIZE + TILE_SIZE / 2 - camX,
+            y: t.y * TILE_SIZE + TILE_SIZE / 2 - camY,
+            r: 155
+          });
+        }
+        for (const ls of lightSources) {
+          const grad = ctx.createRadialGradient(ls.x, ls.y, 15, ls.x, ls.y, ls.r);
+          grad.addColorStop(0, "rgba(0,0,0,1)");
+          grad.addColorStop(1, "rgba(0,0,0,0)");
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(ls.x, ls.y, ls.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+
+      // 8. Panah Kompas Penunjuk Peti Target di Sekitar Pemain
+      const targetChest = gameState.chests.find(c => !c.solved && c.id === gameState.targetChestId);
+      if (targetChest) {
+        const dx = targetChest.x - gameState.player.x;
+        const dy = targetChest.y - gameState.player.y;
+        if (Math.hypot(dx, dy) > 1.5) {
+          const angle = Math.atan2(dy, dx);
+          const arrowDist = 42;
+          const ax = psx + TILE_SIZE / 2 + Math.cos(angle) * arrowDist;
+          const ay = psy + TILE_SIZE / 2 + Math.sin(angle) * arrowDist;
+
+          ctx.save();
+          ctx.translate(ax, ay);
+          ctx.rotate(angle);
+          ctx.fillStyle = "#facc15";
+          ctx.beginPath();
+          ctx.moveTo(10, 0);
+          ctx.lineTo(-6, -6);
+          ctx.lineTo(-3, 0);
+          ctx.lineTo(-6, 6);
+          ctx.closePath();
+          ctx.fill();
+          ctx.restore();
+        }
+      }
+
+      // 9. Render Mini-map
+      renderMinimap();
+    }
+
+    function renderMinimap() {
+      const scale = minimapCanvas.width / MAP_SIZE;
+      mctx.clearRect(0, 0, minimapCanvas.width, minimapCanvas.height);
+
+      for (let y = 0; y < MAP_SIZE; y++) {
+        for (let x = 0; x < MAP_SIZE; x++) {
+          const t = mapGrid[y][x];
+          if (t === TILE.WATER) mctx.fillStyle = "#1d4ed8";
+          else if (t === TILE.SAND) mctx.fillStyle = "#eab308";
+          else if (t === TILE.WOOD_FLOOR || t === TILE.BOOKSHELF) mctx.fillStyle = "#b45309";
+          else if (t === TILE.CINEMA_CARPET || t === TILE.CINEMA_WALL) mctx.fillStyle = "#be123c";
+          else if (t === TILE.LAVA) mctx.fillStyle = "#ef4444";
+          else if (t === TILE.STONE || t === TILE.CRACKED_MINE) mctx.fillStyle = "#6b7280";
+          else mctx.fillStyle = "#3f6212";
+          mctx.fillRect(x * scale, y * scale, Math.ceil(scale), Math.ceil(scale));
+        }
+      }
+
+      // Titik 25 Peti di Minimap
+      for (const c of gameState.chests) {
+        mctx.fillStyle = c.solved ? "#34d399" : "#facc15";
+        mctx.fillRect(c.x * scale - 1, c.y * scale - 1, 3.2, 3.2);
+      }
+
+      // Titik Pemain (Putih berkedip)
+      mctx.fillStyle = "#ffffff";
+      mctx.fillRect(gameState.player.x * scale - 1.5, gameState.player.y * scale - 1.5, 4, 4);
+    }
+
+    /* ============================================================================
+       13. EVENT LISTENERS KEYBOARD, TOUCH & WINDOW ONLOAD
+       ============================================================================ */
+    window.addEventListener("keydown", (e) => {
+      if (!gameState.started) return;
+
+      if (e.key === "Escape") {
+        if (!document.getElementById("rulesModal").classList.contains("hidden")) closeRulesModal();
+        if (!document.getElementById("questionListModal").classList.contains("hidden")) closeQuestionListModal();
+        return;
+      }
+
+      if (gameState.paused || gameState.ended) return;
+
+      gameState.keys[e.key] = true;
+
+      if (e.key === " " || e.key === "e" || e.key === "E" || e.key === "Enter") {
+        e.preventDefault();
+        performPrimaryAction();
+      } else if (e.key === "1") {
+        selectHotbar(0);
+      } else if (e.key === "2") {
+        selectHotbar(1);
+      } else if (e.key === "3") {
+        selectHotbar(2);
+      } else if (e.key === "f" || e.key === "F") {
+        placeTorchAction();
+      }
+    });
+
+    window.addEventListener("keyup", (e) => {
+      gameState.keys[e.key] = false;
+    });
+
+    window.addEventListener("blur", () => {
+      gameState.keys = {};
+      clearTouchDir();
+    });
+
+    function setTouchDir(dx, dy) {
+      initAudio();
+      gameState.touchDir = { x: dx, y: dy };
+    }
+
+    function clearTouchDir() {
+      gameState.touchDir = { x: 0, y: 0 };
+    }
+
+    // Klik/tap langsung di canvas untuk bergerak menuju arah tap atau membuka peti dekat
+    canvas.addEventListener("click", (e) => {
+      if (!gameState.started || gameState.paused || gameState.ended) return;
+      initAudio();
+      const rect = canvas.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const clickY = e.clientY - rect.top;
+
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const dx = clickX - centerX;
+      const dy = clickY - centerY;
+
+      if (Math.hypot(dx, dy) < 36) {
+        performPrimaryAction();
+      } else if (Math.abs(dx) > Math.abs(dy)) {
+        tryMovePlayer(Math.sign(dx), 0);
+      } else {
+        tryMovePlayer(0, Math.sign(dy));
+      }
+    });
+
+    function mainLoop(timestamp) {
+      if (!lastTimestamp) lastTimestamp = timestamp;
+      const dt = Math.min(0.1, (timestamp - lastTimestamp) / 1000);
+      lastTimestamp = timestamp;
+
+      updateSimulation(dt);
+      renderGame();
+      requestAnimationFrame(mainLoop);
+    }
+
+    window.onload = function () {
+      resizeCanvas();
+      requestAnimationFrame(mainLoop);
+    };
+  </script>
+</body>
+</html>
